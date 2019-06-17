@@ -1,6 +1,7 @@
-#######################
-
-FROM ubuntu:18.04
+FROM    ubuntu:18.04
+LABEL   maintainer="Chubby" \
+        git="https://github.com/raffi-ismail/lampodbc" \
+        dockerhub="https://hub.docker.com/r/chubbycat/lampodbc"
 
 RUN echo '#!/bin/sh' > /usr/sbin/policy-rc.d  && \
     echo 'exit 101' >> /usr/sbin/policy-rc.d  && \
@@ -25,7 +26,8 @@ RUN apt-get update -qq && apt-get upgrade -qqy && \
             software-properties-common gcc make autoconf libc-dev pkg-config
 
 RUN add-apt-repository ppa:ondrej/php && \
-    apt-get install -qqy nano apt-transport-https bash apache2 php7.0 php7.0-fpm php-xml php7.0-xml php-pear php7.0-dev php7.0-zip php7.0-curl php7.0-gd php7.0-mysql php7.0-mcrypt php7.0-mbstring && \
+    apt-get install -qqy nano apt-transport-https bash jq apache2 \
+            php7.0 php7.0-fpm php-xml php7.0-xml php-pear php7.0-dev php7.0-zip php7.0-curl php7.0-gd php7.0-mysql php7.0-mcrypt php7.0-mbstring && \
     apt-get update -qqy 
 
 RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - && \
@@ -46,29 +48,20 @@ RUN echo extension=sqlsrv.so > /etc/php/7.0/mods-available/sqlsrv.ini && \
 
 RUN apt-get update && apt-get install -y --no-install-recommends openssh-server  && echo "root:Docker!" | chpasswd
 
-RUN echo "Port                    2222" > /etc/ssh/sshd_config & \
-    echo "ListenAddress           0.0.0.0" >> /etc/ssh/sshd_config & \
-    echo "LoginGraceTime          180" >> /etc/ssh/sshd_config & \
-    echo "X11Forwarding           yes" >> /etc/ssh/sshd_config & \
-    echo "Ciphers aes128-cbc,3des-cbc,aes256-cbc" >> /etc/ssh/sshd_config & \
-    echo "MACs hmac-sha1,hmac-sha1-96" >> /etc/ssh/sshd_config & \
-    echo "StrictModes             yes" >> /etc/ssh/sshd_config & \
-    echo "SyslogFacility          DAEMON" >> /etc/ssh/sshd_config & \
-    echo "PasswordAuthentication  yes" >> /etc/ssh/sshd_config & \
-    echo "PermitEmptyPasswords    no" >> /etc/ssh/sshd_config & \
-    echo "PermitRootLogin         yes" >> /etc/ssh/sshd_config
-
+COPY etc/sshd_config /etc/ssh/
 
 #COPY code-server1.1156-vsc1.33.1-linux-x64.tar.gz /tmp/code-server.tar.gz
 #RUN mkdir /var/www/code-server && tar --strip-components 1 -zxf /tmp/code-server.tar.gz -C /var/www/code-server && chmod +x /var/www/code-server/code-server
 
-RUN echo "#!/bin/sh" > /var/startup.sh && \
-    echo "service ssh start" >> /var/startup.sh && \
-    echo "service php7.0-fpm start" >> /var/startup.sh && \
-    echo "apache2ctl -k start" >> /var/startup.sh && \
-    #echo "/var/www/code-server/code-server /var/www" >> /var/startup.sh && \
-    #echo "apache2ctl -k start  -DFOREGROUND" >> /var/startup.sh && \
-    chmod +x /var/startup.sh
+RUN mv /var/www/html/index.html /var/www/html/index.old.html
+COPY index.php /var/www//html/
 
-EXPOSE 2222 443 80 8443
+COPY etc/php-fpm.conf /etc/php/7.0/fpm/
+COPY etc/php.ini /etc/php/7.0/fpm/
+COPY etc/www.conf /etc/php/7.0/fpm/pool.d/
+
+COPY startup.sh /var/
+
+RUN chmod +x /var/startup.sh
+EXPOSE 2222 443 80 
 ENTRYPOINT ["/var/startup.sh"] 
