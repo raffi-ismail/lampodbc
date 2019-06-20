@@ -1,5 +1,5 @@
 FROM    ubuntu:18.04
-LABEL   maintainer="Chubby" \
+LABEL   maintainer="ChubbyCat" \
         git="https://github.com/raffi-ismail/lampodbc" \
         dockerhub="https://hub.docker.com/r/chubbycat/lampodbc"
 
@@ -26,8 +26,10 @@ RUN apt-get update -qq && apt-get upgrade -qqy && \
             software-properties-common gcc make autoconf libc-dev pkg-config
 
 RUN add-apt-repository ppa:ondrej/php && \
-    apt-get install -qqy nano apt-transport-https bash jq apache2 \
-            php7.0 php7.0-fpm php-xml php7.0-xml php-pear php7.0-dev php7.0-zip php7.0-curl php7.0-gd php7.0-mysql php7.0-mcrypt php7.0-mbstring && \
+    apt-get install -qqy nano apt-transport-https bash zip unzip jq apache2 \
+            php7.0 php7.0-fpm php-xml php7.0-xml php-pear php7.0-dev php7.0-zip php7.0-curl php7.0-gd \
+            php7.0-zip \
+            php7.0-mysql php7.0-mcrypt php7.0-mbstring && \
     apt-get update -qqy 
 
 RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - && \
@@ -53,20 +55,23 @@ COPY etc/sshd_config /etc/ssh/
 #COPY code-server1.1156-vsc1.33.1-linux-x64.tar.gz /tmp/code-server.tar.gz
 #RUN mkdir /var/www/code-server && tar --strip-components 1 -zxf /tmp/code-server.tar.gz -C /var/www/code-server && chmod +x /var/www/code-server/code-server
 
-RUN mv /var/www/html/index.html /var/www/html/index.old.html
-COPY index.php /var/www//html/
-
 COPY etc/php-fpm.conf /etc/php/7.0/fpm/
 COPY etc/php.ini /etc/php/7.0/fpm/
 COPY etc/www.conf /etc/php/7.0/fpm/pool.d/
 
+WORKDIR /var/www
 COPY etc/composer.json /var/www/
 COPY sh/setup-composer.sh /tmp/
-RUN chmod +x /tmp/setup-composer.sh && cd /var/www/ && /tmp/setup-composer.sh
+RUN chmod +x /tmp/setup-composer.sh && cd /var/www/ && /tmp/setup-composer.sh && ./composer.phar install
 
+RUN mv /var/www/html/index.html /var/www/html/index.old.html
+ADD html /var/www/html/
 COPY startup.sh /var/
 
+WORKDIR /var/www/html/fiddle
+RUN mkdir -p sandbox && chmod 777 sandbox
 RUN chmod +x /var/startup.sh
 EXPOSE 2222 443 80 
+
 
 ENTRYPOINT ["/var/startup.sh"] 
