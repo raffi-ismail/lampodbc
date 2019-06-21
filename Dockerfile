@@ -55,6 +55,8 @@ COPY etc/sshd_config /etc/ssh/
 #COPY code-server1.1156-vsc1.33.1-linux-x64.tar.gz /tmp/code-server.tar.gz
 #RUN mkdir /var/www/code-server && tar --strip-components 1 -zxf /tmp/code-server.tar.gz -C /var/www/code-server && chmod +x /var/www/code-server/code-server
 
+COPY etc/apache2.conf /etc/apache2/
+COPY etc/000-default.conf /etc/apache2/sites-available
 COPY etc/php-fpm.conf /etc/php/7.0/fpm/
 COPY etc/php.ini /etc/php/7.0/fpm/
 COPY etc/www.conf /etc/php/7.0/fpm/pool.d/

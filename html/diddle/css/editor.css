@@ -1,0 +1,118 @@
+#editor { 
+    position: absolute;
+    top: 0;
+    right: 50vw;
+    bottom: 0;
+    left: 0;
+}
+
+.ui-actitivy-spinner {
+    position: absolute;
+    top: 1px;
+    right:32px;
+}
+
+.hidden {
+    display: none;
+}
+
+#output-navbar {
+    text-align: left;
+    background-color:#224466;
+    color: #ffffff;
+    padding: 1px 5px;
+    position: absolute;
+    top: 0px;
+    right: 0;
+    left: 50vw;
+}
+
+#output-navbar .navbar-title-block {
+    font-size:16pt;
+    padding: 0px 2px;
+}
+
+#output-statusbar {
+    text-align: left;
+    background-color:#ffffff;
+    color: #000000;
+    font-size:10pt;
+    padding: 5px;
+    position: absolute;
+    top: 95vh;
+    right: 0;
+    left: 50vw;
+    height:35px;
+}
+
+#output-wrapper {
+    background-color:#eeeeee;
+    position: absolute;
+    top: 36px;
+    right: 0;
+    left: 50vw;
+    height:90vh
+}
+
+#output {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    word-wrap: break-word;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    overflow: hidden;
+}
+
+.navbar-iconset {
+    font-size: 14pt;
+    padding: 3px;
+    position: absolute;
+    text-align: right;
+    width: 200px;
+    right: 0px;
+    top: 0px;
+}
+.navbar-iconset a {
+    text-decoration: none;
+    color: #0088aa;
+}
+.logo {
+    position: absolute;
+    height: 30px;
+}
+
+.logo-gh {
+    right: 0px;
+}
+
+.logo-dh {
+    right: 31px;
+}
+
+.logo-php {
+    height: 30px;
+}
+
+.transparent-50 {
+    /* IE 8 */
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+  
+    /* IE 5-7 */
+    filter: alpha(opacity=50);
+  
+    /* Netscape */
+    -moz-opacity: 0.5;
+  
+    /* Safari 1.x */
+    -khtml-opacity: 0.5;
+  
+    /* Good browsers */
+    opacity: 0.5;
+  }

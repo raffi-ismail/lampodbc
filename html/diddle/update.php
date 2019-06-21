@@ -22,7 +22,8 @@ if (!$json) {
 
 $path = 'sandbox/' . $json['id'];
 $url = dirname($_SERVER['SCRIPT_NAME']) . "/{$path}";
-$file = __DIR__ . "/{$path}";
+$dir = __DIR__ . "/{$path}";
+$file = "{$dir}/{$json['id']}";
 if (!file_exists($file)) {
     header('content-type: text/plain', true, 404);
     print "not found";

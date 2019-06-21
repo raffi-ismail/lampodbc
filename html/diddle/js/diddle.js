@@ -16,6 +16,8 @@ var JsonPostRequest = function(url) {
                     raw_string = editor.getSession().getDocument().getValue();
                     console.error('Changed to', raw_string);
                     document.getElementById('output').contentWindow.location.reload();
+                    var element = document.getElementById("ui-spinner-updating");
+                    element.classList.add("hidden");
                 }
             }
             var data = JSON.stringify(data);
@@ -46,6 +48,9 @@ Diddler.prototype.attempt_refresh_output = function () {
         if (a.length) return;
         var content = editor.getSession().getDocument().getValue();
 
+        var element = document.getElementById("ui-spinner-updating");
+        element.classList.remove("hidden");
+
         //*** not in use for now */
         //var dmp = new diff_match_patch();
         //var patch_text = dmp.patch_toText(dmp.patch_make(raw_string, content));    
@@ -55,7 +60,7 @@ Diddler.prototype.attempt_refresh_output = function () {
             _this.json_post.send(params);    
         } else {
             var params = { id: diddle_id, content_text: window.btoa(content) };
-            _this.json_post.send(params);    
+            _this.json_post.send(params);
         }
     }, 1000); // pause 1second without any further changes before refresh
 }
