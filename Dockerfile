@@ -70,7 +70,7 @@ RUN mv /var/www/html/index.html /var/www/html/index.old.html
 ADD html /var/www/html/
 COPY startup.sh /var/
 
-WORKDIR /var/www/html/fiddle
+WORKDIR /var/www/html/diddle
 RUN mkdir -p sandbox && chmod 777 sandbox
 RUN chmod +x /var/startup.sh
 EXPOSE 2222 443 80 
