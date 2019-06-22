@@ -53,7 +53,6 @@ COPY etc/sshd_config /etc/ssh/
 
 COPY etc/apache2.conf /etc/apache2/
 COPY etc/000-default.conf /etc/apache2/sites-available/
-COPY etc/php-fpm.conf /etc/php/7.2/apache2/
 COPY etc/php.ini /etc/php/7.2/apache2/
 
 WORKDIR /var/www
