@@ -57,6 +57,7 @@ COPY etc/php-fpm.conf /etc/php/7.2/apache2/
 COPY etc/php.ini /etc/php/7.2/apache2/
 
 WORKDIR /var/www
+RUN mkdir -p /var/www/var/run && chown -R root:root /var/www/var/run
 COPY etc/composer.json /var/www/
 COPY sh/setup-composer.sh /tmp/
 RUN chmod +x /tmp/setup-composer.sh && cd /var/www/ && /tmp/setup-composer.sh && ./composer.phar install

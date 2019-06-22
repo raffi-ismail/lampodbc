@@ -1,4 +1,3 @@
 <?php
 
-
-chroot('/var/www/html');
+print getcwd();
