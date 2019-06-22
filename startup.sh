@@ -13,8 +13,6 @@ echo "clear_env = no" >> /etc/php/7.0/fpm/pool.d/www.conf
 env | sed "s/\(.*\)=\(.*\)/env[\1]='\2'/" >> /etc/php/7.0/fpm/pool.d/www.conf
 
 /etc/init.d/ssh start
-service php7.0-fpm start
-
 apache2ctl -k start -DFOREGROUND
 
 #/var/www/code-server/code-server /var/www

@@ -23,14 +23,14 @@ RUN rm -rf /var/lib/apt/lists/* && \
 
 RUN apt-get update -qq && apt-get upgrade -qqy && \
     apt-get install -qq -y apt-utils curl git \
-            software-properties-common gcc make autoconf libc-dev pkg-config
+            software-properties-common gcc make autoconf libc-dev pkg-config libmcrypt-dev
 
-RUN add-apt-repository ppa:ondrej/php && \
-    apt-get install -qqy nano apt-transport-https bash zip unzip jq apache2 \
-            php7.0 php7.0-fpm php-xml php7.0-xml php-pear php7.0-dev php7.0-zip php7.0-curl php7.0-gd \
-            php7.0-zip \
-            php7.0-mysql php7.0-mcrypt php7.0-mbstring && \
+#RUN add-apt-repository ppa:ondrej/php && \
+RUN apt-get install -qqy nano apt-transport-https bash zip unzip jq apache2  php7.2 libapache2-mod-php7.2 \
+            php-xml php-pear php7.2-dev php-zip php-curl php-gd \
+            php-zip php-mysql php-mbstring && \
     apt-get update -qqy 
+RUN pecl install mcrypt-1.0.1
 
 RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - && \
     curl https://packages.microsoft.com/config/ubuntu/18.04/prod.list > /etc/apt/sources.list.d/mssql-release.list && \
@@ -38,11 +38,10 @@ RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - && \
     dpkg -i /tmp/packages-microsoft-prod.deb
 
 RUN apt-get update -qqy && ACCEPT_EULA=Y apt-get install -qqy msodbcsql17 mssql-tools unixodbc-dev powershell
-RUN echo extension=sqlsrv.so > /etc/php/7.0/mods-available/sqlsrv.ini && \
-    echo extension=pdo_sqlsrv.so > /etc/php/7.3/mods-available/pdo_sqlsrv.ini && \
-    ln -s /etc/php/7.0/mods-available/sqlsrv.ini /etc/php/7.0/fpm/conf.d/30-sqlsrv.ini && \
-    ln -s /etc/php/7.0/mods-available/pdo_sqlsrv.ini /etc/php/7.0/fpm/conf.d/30-pdo_sqlsrv.ini && \
-    ln -s /etc/apache2/conf-available/php7.0-fpm.conf /etc/apache2/conf-enabled/php7.0-fpm.conf && \
+RUN echo extension=sqlsrv.so > /etc/php/7.2/mods-available/sqlsrv.ini && \
+    echo extension=pdo_sqlsrv.so > /etc/php/7.2/mods-available/pdo_sqlsrv.ini && \
+    ln -s /etc/php/7.2/mods-available/sqlsrv.ini /etc/php/7.2/apache2/conf.d/30-sqlsrv.ini && \
+    ln -s /etc/php/7.2/mods-available/pdo_sqlsrv.ini /etc/php/7.2/apache2/conf.d/30-pdo_sqlsrv.ini && \
     curl -sLo /tmp/tmp.deb http://mirrors.kernel.org/ubuntu/pool/multiverse/liba/libapache-mod-fastcgi/libapache2-mod-fastcgi_2.4.7~0910052141-1.2_amd64.deb && \
     dpkg -i /tmp/tmp.deb; apt-get install -f && \
     a2enmod actions fastcgi alias proxy_fcgi && \
@@ -52,14 +51,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends openssh-server 
 
 COPY etc/sshd_config /etc/ssh/
 
-#COPY code-server1.1156-vsc1.33.1-linux-x64.tar.gz /tmp/code-server.tar.gz
-#RUN mkdir /var/www/code-server && tar --strip-components 1 -zxf /tmp/code-server.tar.gz -C /var/www/code-server && chmod +x /var/www/code-server/code-server
-
 COPY etc/apache2.conf /etc/apache2/
-COPY etc/000-default.conf /etc/apache2/sites-available
-COPY etc/php-fpm.conf /etc/php/7.0/fpm/
-COPY etc/php.ini /etc/php/7.0/fpm/
-COPY etc/www.conf /etc/php/7.0/fpm/pool.d/
+COPY etc/000-default.conf /etc/apache2/sites-available/
+COPY etc/php-fpm.conf /etc/php/7.2/apache2/
+COPY etc/php.ini /etc/php/7.2/apache2/
 
 WORKDIR /var/www
 COPY etc/composer.json /var/www/

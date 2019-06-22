@@ -1,9 +1,14 @@
-# Ubuntu 18.05, Apache 2 and PHP7 with ODBC Drivers
+# Ubuntu 18.04, Apache 2 and PHP7.2 with ODBC Drivers
+
+Updated to run on mod_php, instad of php-frpm
 
 Not technically LAMP (no MySQL in this Dockerfile).
-This is a custom Dockerfile which can be used to deploy a custom container on Azure App Service which supports ODBC drivers required to connect to Microsoft SQL Servers and Azure SQL Services.
+Deploy a custom container on Azure App Service which supports ODBC drivers required to connect to Microsoft SQL Servers and Azure SQL Services.
 
-Out of the box, a container deployed from this Dockerfile has been configured to support Web SSH via the Azure Portal.
+Supports (on Azure via custom container on Web Apps):
+* SSH
+* Configuration (via environment variables)
+* ODBC, sqlsrv functions in PHP
 
 Most configs (PHP, Apache etc) are mostly still defaults. 
 DocumentRoot is still at /var/www/html
