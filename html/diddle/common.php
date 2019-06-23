@@ -1,6 +1,23 @@
 <?php
-function get_sandbox ($id) {
-    return new DiddleSandbox($id);
+define('DIDDLER_DOMAIN', $_SERVER['SERVER_NAME']);
+$visitor =  null;
+if (!isset($_COOKIE['v_id'])) {
+    $visitor = new DiddleVisitor();
+    setcookie('v_id', $visitor->id, time()+86400*999, '/diddle/', DIDDLER_DOMAIN, true, true);
+} else {    
+    $visitor_id = $_COOKIE['v_id'];
+    $visitor = new DiddleVisitor($visitor_id);
+}
+
+DEFINE('DIDDLER_VISITOR', $visitor->get_json());
+
+function get_diddler () {
+    global $visitor;
+    return $visitor;
+}
+
+function get_sandbox ($id, $diddler) {
+    return new DiddleSandbox($id, $diddler);
 }
 
 
@@ -13,19 +30,52 @@ function get_sandbox ($id) {
 // require_once('diff_match_patch/src/DiffToolkit.php');
 // use DiffMatchPatch\DiffMatchPatch;
 
+class DiddleVisitor {
+    public $id, $salt, $hash;
 
-require_once('classes/base62x.php');
+    function __construct($id = null, $salt = null, $hash = null) {
+        $this->id = $id ? $id : hash('sha256', random_bytes(256), true);
+        $this->salt = $salt ? $salt : hash('sha256', random_bytes(256), true);
+        $this->hash = $hash ? $hash : $this->hash(100);
+    }
+
+    function hash ($rounds = 100) {
+        $hash = '';
+        for ($n = 1; $n <= $rounds; $n++) {
+            $hash = hash('sha1', "{$this->id}{$this->salt}", $n < $rounds ? true : false);
+        }
+        return password_hash($hash, PASSWORD_BCRYPT);
+    }
+
+    function verify_hash ($hash = null) {
+        return  $this->hash() === ($hash ? $hash : $this->hash);
+    }
+
+    function get_json () {
+        return json_encode ( [ 'salt' => bin2hex($this->salt), 'hash' => $this->hash() ] );
+    }
+}
+
 class DiddleSandbox {
-    public $id, $checksum, $chainsum, $path, $url, $dir, $file, $checksum_file;
+    public $id, $checksum, $chainsum, $path, $url, $dir, $file, $checksum_file, $diddler;
 
-    function __construct($id) {
+    function __construct($id, $diddler) {
         $this->id = $id;
+        $this->diddler = $diddler;
         $this->path = 'sandbox/' . $id;
         $this->url = dirname($_SERVER['SCRIPT_NAME']) . "/{$this->path}";
         $this->dir = "/var/{$this->path}";
         $this->file = "{$this->dir}/code";
         $this->checksum = hash('sha256', $this->file);
         $this->checksum_file = "{$this->dir}/checksum";
+    }
+
+    static function get_new_id () {
+        $random = bin2hex(random_bytes(4));
+        $microtime = microtime(true) - 1557012600;
+        $base = base_convert($microtime, 10, 16);
+        $id = gmp_strval ( gmp_init( "0x{$random}{$base}" ), 62 );
+        return $id;
     }
 
     function patch_code() {
@@ -83,6 +133,13 @@ class DiddleSandbox {
         $htaccess = "{$this->dir}/.htaccess";
         copy('defaults/htaccess_diddle', $htaccess);
         chmod($htaccess, 0400);
+
+        $diddler = "{$this->dir}/diddler";
+        touch($diddler);
+        $fsDiddler = fopen($diddler, 'w');
+        fwrite($fsDiddler, $this->diddler->get_json()); 
+        fclose($fsDiddler);
+
         $default_stream = fopen('defaults/php_diddle', 'r');
         $this->update_code(null, $default_stream);
         fclose($default_stream);

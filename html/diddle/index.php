@@ -6,7 +6,10 @@ include_once('inc_init_sandbox.php');
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>PHPDiddle</title>
+<meta property="og:title" content="My Diddle">
+<meta property="og:description" content="A snippet of my code written in PHP">
+<meta property="og:url" content="https:////azurefiddle.com/diddle/<?php echo $id; ?>">
+<title>PHP|Diddle</title>
 <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="css/editor.css">
 <link rel="stylesheet" type="text/css" href="css/loader.css">
@@ -45,7 +48,6 @@ include_once('inc_init_sandbox.php');
     editor.setTheme("ace/theme/solarized_dark");
     editor.getSession().setMode("ace/mode/php");
     editor.getSession().setUseWrapMode(true);
-    //editor.getSession().getAnnotations();
 
     const diddlerObject = new Diddler('update.php');
     editor.on('change', function(delta) {

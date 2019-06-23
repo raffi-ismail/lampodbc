@@ -14,7 +14,8 @@ if (!$json) {
 }
 
 include_once('common.php');
-$sandbox = get_sandbox($json['id']);
+$sandbox = get_sandbox($json['id'], get_diddler());
+
 if (!file_exists($sandbox->file)) {
     header('content-type: text/plain', true, 404);
     print "not found";
