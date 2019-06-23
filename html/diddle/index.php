@@ -42,7 +42,7 @@ include_once('inc_init_sandbox.php');
     var diddle_id = '<?php echo $id; ?>';
 
     var editor = ace.edit("editor");
-    editor.setTheme("ace/theme/dracula");
+    editor.setTheme("ace/theme/solarized_dark");
     editor.getSession().setMode("ace/mode/php");
     editor.getSession().setUseWrapMode(true);
     //editor.getSession().getAnnotations();
