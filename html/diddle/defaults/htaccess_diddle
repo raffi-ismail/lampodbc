@@ -2,7 +2,7 @@ display_errors 1
 error_reporting E_ALL | E_NOTICE
 display_startup_errors 1
 html_errors 0
-allow_url_fopen 0
+allow_url_fopen 1
 file_uploads off
 max_file_uploads 0
 default_socket_timeout 5
