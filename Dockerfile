@@ -28,7 +28,7 @@ RUN apt-get update -qq && apt-get upgrade -qqy && \
 #RUN add-apt-repository ppa:ondrej/php && \
 RUN apt-get install -qqy nano apt-transport-https bash zip unzip jq apache2  php7.2 libapache2-mod-php7.2 \
             php-xml php-pear php7.2-dev php-zip php-curl php-gd \
-            php-zip php-mysql php-mbstring && \
+            php-zip php-mysql php-mbstring php-gmp && \
     apt-get update -qqy 
 RUN pecl install mcrypt-1.0.1
 
@@ -54,19 +54,21 @@ COPY etc/sshd_config /etc/ssh/
 COPY etc/apache2.conf /etc/apache2/
 COPY etc/000-default.conf /etc/apache2/sites-available/
 COPY etc/php.ini /etc/php/7.2/apache2/
+RUN a2enmod rewrite
 
 WORKDIR /var/www
-RUN mkdir -p /var/www/var/run && chown -R root:root /var/www/var/run
-COPY etc/composer.json /var/www/
+RUN mkdir -p var/run && chown -R root:root var/run
+RUN mkdir -p var/sandbox && chown -R root:root var/sandbox && chmod 777 var/sandbox
+
+COPY etc/composer.json ./
 COPY sh/setup-composer.sh /tmp/
-RUN chmod +x /tmp/setup-composer.sh && cd /var/www/ && /tmp/setup-composer.sh && ./composer.phar install
+RUN chmod +x /tmp/setup-composer.sh && /tmp/setup-composer.sh && ./composer.phar install
 
 RUN mv /var/www/html/index.html /var/www/html/index.old.html
 ADD html /var/www/html/
 COPY startup.sh /var/
 
 WORKDIR /var/www/html/diddle
-RUN mkdir -p sandbox && chmod 777 sandbox
 RUN chmod +x /var/startup.sh
 EXPOSE 2222 443 80 
 

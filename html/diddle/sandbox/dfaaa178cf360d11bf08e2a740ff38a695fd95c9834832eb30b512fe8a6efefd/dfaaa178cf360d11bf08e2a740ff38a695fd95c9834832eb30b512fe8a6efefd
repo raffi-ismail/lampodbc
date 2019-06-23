@@ -1,5 +1,0 @@
-<?php
-
-
-
-chroot('/var/www');

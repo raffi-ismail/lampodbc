@@ -2,7 +2,11 @@
     if (isset($_REQUEST['id'])) {
         $id = !empty($_REQUEST['id']) ? $_REQUEST['id'] : false;
     } else {
-        $id = hash('sha256', random_bytes(128));
+        $random = bin2hex(random_bytes(4));
+        $microtime = microtime(true) - 1557012600;
+        $base = base_convert($microtime * 1000, 10, 16);
+        $new_id = $random.$base;
+        $id = gmp_strval ( gmp_init( "0x{$new_id}" ), 62 ); 
     }
     if (!$id) {
         header('content-type: text/html', true, 404);
@@ -21,7 +25,7 @@
         }
     } else {
         $sandbox->init_assets();
-        header("location: {$_SERVER['SCRIPT_NAME']}?id={$id}");
+        header("location: /diddle/{$id}");
         exit;
     }
     $raw_content = file_get_contents($sandbox->file);

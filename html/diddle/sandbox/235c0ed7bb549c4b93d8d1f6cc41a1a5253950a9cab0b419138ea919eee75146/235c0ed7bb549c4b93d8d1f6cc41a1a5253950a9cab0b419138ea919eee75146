@@ -1,9 +1,0 @@
-<?php
-
-
-print "Hello World\n";
-print "new line\n";
-print "third line\n";
-#
-#
-$a = file_get_contents("https://example.com");

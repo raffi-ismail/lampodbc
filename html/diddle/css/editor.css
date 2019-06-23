@@ -81,7 +81,9 @@ body {
 }
 .navbar-iconset a {
     text-decoration: none;
-    color: #0088aa;
+    font-weight: 200;
+    font-size: 12pt;
+    color: #eeeeee;
 }
 .logo {
     position: absolute;

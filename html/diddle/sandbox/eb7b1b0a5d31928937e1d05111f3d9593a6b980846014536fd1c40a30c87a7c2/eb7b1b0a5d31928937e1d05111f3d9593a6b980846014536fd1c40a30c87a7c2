@@ -1,5 +1,0 @@
-<?php
-
-
-$a = scandir(__DIR__ . '/../');
-print_r($a);

@@ -21,12 +21,13 @@ include_once('inc_init_sandbox.php');
         <span class="title">Diddle</span>
     </div>
     <div class="navbar-iconset">
-        <a href="view.php?id=<?php print $id; ?>" target="_blank" alt="Open output in new window"><i class="glyphicon glyphicon-new-window"></i></a>
+        <a href="/diddle" target="_blank" alt="New Diddle"><i class="glyphicon glyphicon-plus"></i></a>
+        <a href="v/<?php print $id; ?>" target="_blank" alt="Open output in new window"><i class="glyphicon glyphicon-new-window"></i></a>
     </div>
     <div id="ui-spinner-updating" class="ui-actitivy-spinner hidden resize-50 lds-grid"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
 </div>
 <div id="output-wrapper">
-    <iframe id="output" src="view.php?id=<?php print $id; ?>"></iframe>
+    <iframe id="output" src="v/<?php print $id; ?>"></iframe>
 </div>
 <div id="output-statusbar">
     <a href="https://github.com/raffi-ismail/lampodbc" target="_blank"><img class="logo logo-gh" src="images/logo-gh-cat.png"></a>

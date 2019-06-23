@@ -14,11 +14,12 @@ namespace SandboxedNamespace {
     
     set_error_handler('SandboxedNamespace\error_handler');
     error_reporting(E_ALL);
-    ini_set('display_errors',1);
-    ini_set('error_reporting', E_ALL | E_NOTICE);
-    ini_set('display_startup_errors',1);
-    ini_set('html_errors', 0);
-    ini_set('allow_url_fopen', 0);
+    // moved ini sets to .htaccess in each sandbox directory
+    // ini_set('display_errors',1);
+    // ini_set('error_reporting', E_ALL | E_NOTICE);
+    // ini_set('display_startup_errors',1);
+    // ini_set('html_errors', 0);
+    // ini_set('allow_url_fopen', 0);
 
     $id = isset($_REQUEST['id']) ? $_REQUEST['id'] : false;
     
@@ -39,6 +40,7 @@ namespace SandboxedNamespace {
     ini_set('open_basedir', $sandbox->dir);
 
     header('content-type: text/plain');
+
     include_once ($sandbox->file);      
 }
 

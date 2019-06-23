@@ -1,0 +1,20 @@
+<?php
+
+/**
+ * PHPDiddle
+ *
+ * You can find me at: 
+ * https://github.com/raffi-ismail/lampodbc (GitHub)
+ * https://hub.docker.com/r/chubbycat/lampodbc (DockerHub)
+ *
+ */
+
+// By default Diddle content type is in text/plain
+
+// uncomment the following line to text/html
+// header('content-type: text/html', true);
+
+// or the following for application/json
+// header('content-type: application/json', true);
+
+

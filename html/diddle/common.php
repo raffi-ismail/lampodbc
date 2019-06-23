@@ -13,6 +13,8 @@ function get_sandbox ($id) {
 // require_once('diff_match_patch/src/DiffToolkit.php');
 // use DiffMatchPatch\DiffMatchPatch;
 
+
+require_once('classes/base62x.php');
 class DiddleSandbox {
     public $id, $checksum, $chainsum, $path, $url, $dir, $file, $checksum_file;
 
@@ -20,11 +22,10 @@ class DiddleSandbox {
         $this->id = $id;
         $this->path = 'sandbox/' . $id;
         $this->url = dirname($_SERVER['SCRIPT_NAME']) . "/{$this->path}";
-        $this->dir = __DIR__ . "/{$this->path}";
+        $this->dir = "/var/{$this->path}";
         $this->file = "{$this->dir}/code";
-        $this->checksum = sha1($this->file);
+        $this->checksum = hash('sha256', $this->file);
         $this->checksum_file = "{$this->dir}/checksum";
-    
     }
 
     function patch_code() {
@@ -46,7 +47,7 @@ class DiddleSandbox {
         // }    
     }
 
-    function update_code(&$text) {
+    function update_code($text = null, $input_stream = null) {
         $checksum_content = $this->checksum;
         $this->checksum = $checksum_patched = sha1($text);
         $this->chainsum = $chainsum = sha1("{$checksum_content}...{$checksum_patched}");
@@ -64,7 +65,11 @@ class DiddleSandbox {
         fwrite($buffer_stream, implode('', $payload));
         **/
         
-        fwrite($buffer_stream, $text);
+        if ($input_stream) {
+            stream_copy_to_stream($input_stream, $buffer_stream);
+        } else {
+            fwrite($buffer_stream, $text);
+        }
         rewind($buffer_stream);
         stream_copy_to_stream($buffer_stream, $output_stream);
         fclose($buffer_stream);
@@ -75,6 +80,12 @@ class DiddleSandbox {
     function init_assets () {
         mkdir($this->dir);
         touch($this->file);
+        $htaccess = "{$this->dir}/.htaccess";
+        copy('defaults/htaccess_diddle', $htaccess);
+        chmod($htaccess, 0400);
+        $default_stream = fopen('defaults/php_diddle', 'r');
+        $this->update_code(null, $default_stream);
+        fclose($default_stream);
     }
 
     function update_assets () {
