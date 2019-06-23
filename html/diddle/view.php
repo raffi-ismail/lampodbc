@@ -30,7 +30,7 @@ namespace SandboxedNamespace {
     }
     
     include_once('common.php');
-    $sandbox = get_sandbox($id, get_diddler());
+    $sandbox = get_new_sandbox($id, get_diddler());
 
     if (!file_exists($sandbox->file)) {
         header('content-type: text/plain', true, 404);

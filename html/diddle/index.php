@@ -8,7 +8,7 @@ include_once('inc_init_sandbox.php');
 <meta charset="UTF-8">
 <meta property="og:title" content="My Diddle">
 <meta property="og:description" content="A snippet of my code written in PHP">
-<meta property="og:url" content="https:////azurefiddle.com/diddle/<?php echo $id; ?>">
+<meta property="og:url" content="https:////azurefiddle.com/diddle/<?php echo DIDDLE_ID; ?>">
 <title>PHP|Diddle</title>
 <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="css/editor.css">
@@ -25,12 +25,12 @@ include_once('inc_init_sandbox.php');
     </div>
     <div class="navbar-iconset">
         <a href="/diddle" target="_blank" alt="New Diddle"><i class="glyphicon glyphicon-plus"></i></a>
-        <a href="v/<?php print $id; ?>" target="_blank" alt="Open output in new window"><i class="glyphicon glyphicon-new-window"></i></a>
+        <a href="v/<?php print DIDDLE_ID; ?>" target="_blank" alt="Open output in new window"><i class="glyphicon glyphicon-new-window"></i></a>
     </div>
     <div id="ui-spinner-updating" class="ui-actitivy-spinner hidden resize-50 lds-grid"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
 </div>
 <div id="output-wrapper">
-    <iframe id="output" src="v/<?php print $id; ?>"></iframe>
+    <iframe id="output" src="v/<?php print DIDDLE_ID; ?>"></iframe>
 </div>
 <div id="output-statusbar">
     <a href="https://github.com/raffi-ismail/lampodbc" target="_blank"><img class="logo logo-gh" src="images/logo-gh-cat.png"></a>
@@ -42,7 +42,7 @@ include_once('inc_init_sandbox.php');
 <script src="js/diddle.js" ></script>
 <script>
     var raw_string = `<?php echo $raw_content; ?>`;
-    var diddle_id = '<?php echo $id; ?>';
+    var diddle_id = '<?php echo DIDDLE_ID; ?>';
 
     var editor = ace.edit("editor");
     editor.setTheme("ace/theme/solarized_dark");
@@ -50,9 +50,20 @@ include_once('inc_init_sandbox.php');
     editor.getSession().setUseWrapMode(true);
 
     const diddlerObject = new Diddler('update.php');
-    editor.on('change', function(delta) {
-        diddlerObject.attempt_refresh_output();
-    });
+
+<?php 
+    if (get_current_sandbox()->did_diddler_diddle() || DEBUG_MODE) { 
+?>
+        editor.on('change', function(delta) {
+            diddlerObject.attempt_refresh_output();
+        });
+<?php 
+    } else { 
+?>
+        editor.setReadOnly(true);
+<?php 
+    } 
+?>
 
 
 </script>

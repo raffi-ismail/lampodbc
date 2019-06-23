@@ -1,8 +1,8 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors',1);
-ini_set('error_reporting', E_ALL);
-ini_set('display_startup_errors',1);
+// error_reporting(E_ALL);
+// ini_set('display_errors',1);
+// ini_set('error_reporting', E_ALL);
+// ini_set('display_startup_errors',1);
 
 
 $data = file_get_contents('php://input');
@@ -14,11 +14,17 @@ if (!$json) {
 }
 
 include_once('common.php');
-$sandbox = get_sandbox($json['id'], get_diddler());
+$sandbox = get_new_sandbox($json['id'], get_diddler());
 
 if (!file_exists($sandbox->file)) {
     header('content-type: text/plain', true, 404);
-    print "not found";
+    print "not found: {$sandbox->file}";
+    exit;
+}
+
+if (!$sandbox->did_diddler_diddle() && !DEBUG_MODE) {
+    header('content-type: text/plain', true, 403);
+    print "You weren't the diddler for this Diddle";
     exit;
 }
 
@@ -40,8 +46,13 @@ $patch = false;
 $patched_text = false;
 
 $new_text = $patched_text ? $patched_text : $content_text;
-
-$sandbox->update_code($new_text);
+try {
+    $sandbox->update_code($new_text);
+} catch (Exception $ex) {
+    header('content-type: text/plain', true, 403);
+    print "An error occured while trying to update the Diddle: " . $ex->getMessage();
+    exit;
+}
 
 $return = [
     'id' => $sandbox->id,
