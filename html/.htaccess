@@ -1,0 +1,10 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule "^diddle/([a-zA-Z0-9]+)$" "/diddle/index.php?id=$1"
+    RewriteRule "^diddle/v/([a-zA-Z0-9]+)$" "/diddle/view.php?id=$1"
+</IfModule>
+
+ErrorDocument 403 "/diddle/403.html"
+ErrorDocument 404 "/diddle/404.html"
+ErrorDocument 500 "/diddle/500.html"
+
