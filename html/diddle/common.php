@@ -1,5 +1,5 @@
 <?php
-define('DEBUG_MODE', $_SERVER['SERVER_NAME'] == 'localhost' || $_SERVER['SERVER_ADDR'] == '127.0.0.1');
+define('DEBUG_MODE', $_SERVER['SERVER_NAME'] == 'localhost' || $_SERVER['SERVER_NAME'] == '127.0.0.1');
 define('DIDDLER_DOMAIN', $_SERVER['SERVER_NAME']);
 define('DIDDLE_ID', isset($_REQUEST['id']) ? $_REQUEST['id'] : false);
 define('WWW_DIR', '/var/www');
