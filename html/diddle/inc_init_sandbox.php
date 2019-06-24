@@ -19,6 +19,7 @@ else if (isset($_COOKIE['last_diddle'])) {
         print "Not found";
         exit;
     }
+    header("location: /diddle/{$id}");
 } else {
     $id = DiddleSandbox::get_new_id(); 
     setcookie('last_diddle', $id, time()+86400*999, '/diddle/', DIDDLER_DOMAIN, true, true);
