@@ -32,6 +32,11 @@ const Diddler = function(script_path) {
     this.script_path = script_path;
 }
 
+Diddler.prototype.set_navbar_warning_notice = function (message) {
+    var element = document.getElementById("notice-warning");
+    element.innerHTML = message;
+}
+
 Diddler.prototype.get_editor_syntax_errors = function () {
     return editor.getSession().getAnnotations().filter(annotation => { 
         return annotation.type == 'error' && annotation.text.indexOf('unexpected $EOF') == -1;

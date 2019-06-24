@@ -1,8 +1,9 @@
 <IfModule mod_rewrite.c>
     RewriteEngine On
     RewriteRule "^diddle/?$" "diddle/index.php"
-    RewriteRule "^diddle/([a-zA-Z0-9]+)/?$" "/diddle/index.php?id=$1"
-    RewriteRule "^diddle/v/([a-zA-Z0-9]+)/?$" "/diddle/view.php?id=$1"
+    RewriteRule "^diddle/([a-zA-Z0-9]+)/?$" "diddle/index.php?id=$1"
+    RewriteRule "^diddle/v/([a-zA-Z0-9]+)/?$" "diddle/view.php?id=$1"
+    RewriteRule "^diddle/c/([a-zA-Z0-9]+)/?$" "diddle/copy.php?id=$1"
 </IfModule>
 
 ErrorDocument 403 "/diddle/403.html"

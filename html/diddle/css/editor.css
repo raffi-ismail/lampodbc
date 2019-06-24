@@ -1,9 +1,10 @@
 #editor { 
     position: absolute;
-    top: 0;
+    top: 32px;
     right: 50vw;
     bottom: 0;
     left: 0;
+    padding: 5px;
 }
 
 .ui-actitivy-spinner {
@@ -20,11 +21,11 @@
     text-align: left;
     background-color:#224466;
     color: #ffffff;
-    padding: 1px 5px;
+    padding: 1px 10px 1px 5px;
     position: absolute;
     top: 0px;
     right: 0;
-    left: 50vw;
+    left: 0;
 }
 
 #output-navbar .navbar-title-block {
@@ -70,13 +71,27 @@ body {
     overflow: hidden;
 }
 
+.navbar-notices {
+    
+    color: 
+    font-size: 11pt;
+    padding: 3px;
+    position: absolute;
+    text-align: center;
+    left: 25vw;
+    right: 25vw;
+    width: 50%;
+    bottom: 5px;
+    padding: 0;
+}
+
 .navbar-iconset {
     font-size: 14pt;
     padding: 3px;
     position: absolute;
     text-align: right;
     width: 200px;
-    right: 0px;
+    right: 5px;
     top: 0px;
 }
 .navbar-iconset a {

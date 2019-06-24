@@ -23,9 +23,15 @@ include_once('inc_init_sandbox.php');
         <img class="transparent-50 logo-php" src="images/logo-php.png">
         <span class="title">Diddle</span>
     </div>
+    <div class="navbar-notices">
+        <div id="notice-warning" class="notice-warning">
+            Test warning message
+        </div>
+    </div>
     <div class="navbar-iconset">
-        <a href="/diddle" target="_blank" alt="New Diddle"><i class="glyphicon glyphicon-plus"></i></a>
-        <a href="v/<?php print DIDDLE_ID; ?>" target="_blank" alt="Open output in new window"><i class="glyphicon glyphicon-new-window"></i></a>
+        <a href="/diddle" target="_blank" title="New Diddle"><i class="glyphicon glyphicon-plus"></i></a>
+        <a href="c/<?php print DIDDLE_ID; ?>" target="_blank" title="Copy this Diddle"><i class="glyphicon glyphicon-copy"></i></a>
+        <a href="v/<?php print DIDDLE_ID; ?>" target="_blank" title="Open output in new window"><i class="glyphicon glyphicon-new-window"></i></a>
     </div>
     <div id="ui-spinner-updating" class="ui-actitivy-spinner hidden resize-50 lds-grid"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
 </div>
@@ -52,17 +58,25 @@ include_once('inc_init_sandbox.php');
     const diddlerObject = new Diddler('update.php');
 
 <?php 
-    if (get_current_sandbox()->did_diddler_diddle() || DEBUG_MODE) { 
+if (!get_current_sandbox()->did_diddler_diddle()) { 
 ?>
-        editor.on('change', function(delta) {
-            diddlerObject.attempt_refresh_output();
-        });
+    diddlerObject.set_navbar_warning_notice('You&rsquo;re currently viewing this Diddle in readonly mode');
 <?php 
-    } else { 
+}
 ?>
-        editor.setReadOnly(true);
+
 <?php 
-    } 
+if (get_current_sandbox()->did_diddler_diddle() || DEBUG_MODE) { 
+?>
+    editor.on('change', function(delta) {
+        diddlerObject.attempt_refresh_output();
+    });
+<?php 
+} else { 
+?>
+    editor.setReadOnly(true);
+<?php 
+} 
 ?>
 
 

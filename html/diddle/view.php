@@ -13,24 +13,21 @@ namespace SandboxedNamespace {
     }
     
     set_error_handler('SandboxedNamespace\error_handler');
-    error_reporting(E_ALL);
+    // error_reporting(E_ALL);
     // moved ini sets to .htaccess in each sandbox directory
     // ini_set('display_errors',1);
     // ini_set('error_reporting', E_ALL | E_NOTICE);
     // ini_set('display_startup_errors',1);
     // ini_set('html_errors', 0);
-    // ini_set('allow_url_fopen', 0);
-
-    $id = isset($_REQUEST['id']) ? $_REQUEST['id'] : false;
-    
-    if (!$id) {
+    // ini_set('allow_url_fopen', 0);    
+    include_once('common.php');
+    if (!DIDDLE_ID) {
         header('content-type: text/plain', true, 404);
         print "invalid diddle";
         exit;
     }
     
-    include_once('common.php');
-    $sandbox = get_new_sandbox($id, get_diddler());
+    $sandbox = get_new_sandbox(DIDDLE_ID, get_diddler());
 
     if (!file_exists($sandbox->file)) {
         header('content-type: text/plain', true, 404);
