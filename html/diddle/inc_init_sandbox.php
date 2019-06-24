@@ -15,8 +15,8 @@ else if (isset($_COOKIE['last_diddle'])) {
     $id = $_COOKIE['last_diddle'];
     $sandbox = get_new_sandbox($id, get_diddler());
     if (!file_exists($sandbox->file)) {
-        header('content-type: text/html', true, 404);
-        print "Not found";
+        setcookie('last_diddle', null, 0, '/diddle/', DIDDLER_DOMAIN, true, true);
+        header("location: /diddle");
         exit;
     }
     header("location: /diddle/{$id}");
