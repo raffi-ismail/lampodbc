@@ -24,9 +24,7 @@ include_once('inc_init_sandbox.php');
         <span class="title">Diddle</span>
     </div>
     <div class="navbar-notices">
-        <div id="notice-warning" class="notice-warning">
-            Test warning message
-        </div>
+        <div id="notice-warning" class="notice-warning"></div>
     </div>
     <div class="navbar-iconset">
         <a href="/diddle" target="_blank" title="New Diddle"><i class="glyphicon glyphicon-plus"></i></a>
