@@ -2,6 +2,7 @@
 define('DEBUG_MODE', $_SERVER['SERVER_NAME'] == 'localhost' || $_SERVER['SERVER_ADDR'] == '127.0.0.1');
 define('DIDDLER_DOMAIN', $_SERVER['SERVER_NAME']);
 define('DIDDLE_ID', isset($_REQUEST['id']) ? $_REQUEST['id'] : false);
+define('WWW_DIR', '/var/www');
 
 $visitor =  null;
 if (!isset($_COOKIE['v_id'])) {
@@ -54,11 +55,12 @@ class DiddleSandbox {
         $this->diddler = $diddler;
         $this->path = 'sandbox/' . $id;
         $this->url = dirname($_SERVER['SCRIPT_NAME']) . "/{$this->path}";
-        $this->dir = "/var/{$this->path}";
+        $this->dir = WWW_DIR . "/{$this->path}";
         $this->file = "{$this->dir}/code";
         $this->checksum = hash('sha256', $this->file);
         $this->checksum_file = "{$this->dir}/checksum";
         $this->diddler_file = "{$this->dir}/diddler";
+        //print $this->file;exit;
     }
 
     static function get_new_id () {

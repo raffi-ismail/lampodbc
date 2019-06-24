@@ -9,11 +9,14 @@
     display: none;
 }
 
-.text-yellow {
-    color: yellow;
+.larger, .larger:hover {
+    font-size: 125%;
 }
 
-.text-yellow:hover {
+.text-yellow, .text-yellow:hover {
+    color: rgb(255, 187, 0);
+}
+
     color: yellow;
 }
 

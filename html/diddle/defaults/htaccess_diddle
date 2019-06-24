@@ -1,8 +1,8 @@
-display_errors 1
+display_errors On
 error_reporting E_ALL | E_NOTICE
-display_startup_errors 1
-html_errors 0
-allow_url_fopen 1
+display_startup_errors On
+html_errors Off
+allow_url_fopen On
 file_uploads off
-max_file_uploads 0
-default_socket_timeout 15
+max_file_uploads On
+default_socket_timeout 60

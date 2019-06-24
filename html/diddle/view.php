@@ -1,31 +1,17 @@
 <?php
 namespace SandboxedNamespace {
-    function error_handler($errno, $errstr, $errfile, $errline) {
-        $errfile = basename($errfile);
-        print "\nWarning: {$errstr} ({$errno}) in {$errfile} on line {$errline}\n";
-    }
+    include_once('common.php');    
 
-    function set_error_handler($func) {
-        if ($func == 'SandboxedNamespace\error_handler') {
-            \set_error_handler($func);
-        } else {
-        }
-    }
-    
-    set_error_handler('SandboxedNamespace\error_handler');
-    // error_reporting(E_ALL);
-    // moved ini sets to .htaccess in each sandbox directory
-    // ini_set('display_errors',1);
-    // ini_set('error_reporting', E_ALL | E_NOTICE);
-    // ini_set('display_startup_errors',1);
-    // ini_set('html_errors', 0);
-    // ini_set('allow_url_fopen', 0);    
-    include_once('common.php');
     if (!DIDDLE_ID) {
         header('content-type: text/plain', true, 404);
         print "invalid diddle";
         exit;
     }
+
+    function error_handler($errno, $errstr, $errfile, $errline) {
+        $errfile = basename($errfile);
+        print "\nWarning: {$errstr} ({$errno}) in {$errfile} on line {$errline}\n";
+    }   \set_error_handler('SandboxedNamespace\error_handler');
     
     $sandbox = get_new_sandbox(DIDDLE_ID, get_diddler());
 
@@ -34,10 +20,25 @@ namespace SandboxedNamespace {
         print "not found";
         exit;
     }
-    ini_set('open_basedir', $sandbox->dir);
 
+    $R_ENV = json_decode(file_get_contents(WWW_DIR . '/env.json'), true);
+    $O_SERVER = [
+        'SCRIPT_NAME' => '/diddle/v/' . DIDDLE_ID,
+        'PHP_SELF' => '/diddle/v/' . DIDDLE_ID,
+        'SCRIPT_FILENAME' => $sandbox->file
+    ];
+    if ($R_ENV) {
+        $_SERVER = array_diff_key($_SERVER, $R_ENV);
+        $_SERVER = array_merge($_SERVER, $O_SERVER);
+        $_ENV = [];
+    }
+    
+    define ('__DIDDLE_FILE__', $sandbox->file);
+    define ('__DIDDLE_DIR__', $sandbox->dir);
+    unset($R_ENV, $O_SERVER, $sandbox);
+
+    ini_set('open_basedir', __DIDDLE_DIR__);
+    
     header('content-type: text/plain');
-
-    include_once ($sandbox->file);      
+    include_once (__DIDDLE_FILE__);
 }
-

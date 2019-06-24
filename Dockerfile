@@ -57,19 +57,19 @@ COPY etc/php.ini /etc/php/7.2/apache2/
 RUN a2enmod rewrite
 
 WORKDIR /var/www
-RUN mkdir -p var/run && chown -R root:root var/run
-RUN mkdir -p var/sandbox && chown -R root:root var/sandbox && chmod 777 var/sandbox
-
+RUN mkdir -p sandbox && chown -R root:root sandbox && chmod 777 sandbox
 COPY etc/composer.json ./
 COPY sh/setup-composer.sh /tmp/
 RUN chmod +x /tmp/setup-composer.sh && /tmp/setup-composer.sh && ./composer.phar install
 
-RUN mv /var/www/html/index.html /var/www/html/index.old.html
-ADD html /var/www/html/
-COPY startup.sh /var/
+RUN mv html/index.html html/index.old.html
+ADD html html/
 
-WORKDIR /var/www/html/diddle
+COPY startup.sh /var/
 RUN chmod +x /var/startup.sh
+
+#WORKDIR /var/www/html/diddle
+
 EXPOSE 2222 443 80 
 
 

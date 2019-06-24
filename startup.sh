@@ -7,10 +7,10 @@ printenv | jq --raw-input --slurp \
     > $ENV_JSON && \
     chmod 400 $ENV_JSON
 
-#env | sed "s/\(.*\)=\(.*\)/export \1='\2'/" >> /etc/apache2/envvars
+env | sed "s/\(.*\)=\(.*\)/export \1='\2'/" >> /etc/apache2/envvars
 
-echo "clear_env = no" >> /etc/php/7.0/fpm/pool.d/www.conf
-env | sed "s/\(.*\)=\(.*\)/env[\1]='\2'/" >> /etc/php/7.0/fpm/pool.d/www.conf
+#echo "clear_env = no" >> /etc/php/7.0/fpm/pool.d/www.conf
+#env | sed "s/\(.*\)=\(.*\)/env[\1]='\2'/" >> /etc/php/7.0/fpm/pool.d/www.conf
 
 /etc/init.d/ssh start
 apache2ctl -k start -DFOREGROUND

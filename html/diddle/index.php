@@ -63,9 +63,9 @@ include_once('inc_init_sandbox.php');
 if (!get_current_sandbox()->did_diddler_diddle()) { 
 ?>
     diddlerObject.set_navbar_warning_notice(`
-    You&rsquo;re currently viewing this Diddle in readonly mode. Clone 
-    <a class="no-decorations text-yellow" href="c/<?php print DIDDLE_ID; ?>" target="_blank" title="Clone this Diddle"><i class="glyphicon glyphicon-duplicate"></i></a> 
-    this Diddle to make your own changes.
+    Viewing this Diddle in readonly mode. Clone 
+    <a class="no-decorations text-yellow larger" href="c/<?php print DIDDLE_ID; ?>" target="_blank" title="Clone this Diddle"><i class="glyphicon glyphicon-duplicate"></i></a> 
+    to make your own changes.
     `);
 <?php 
 }
