@@ -5,4 +5,4 @@ html_errors 0
 allow_url_fopen 1
 file_uploads off
 max_file_uploads 0
-default_socket_timeout 5
+default_socket_timeout 15

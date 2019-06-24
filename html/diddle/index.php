@@ -17,28 +17,32 @@ include_once('inc_init_sandbox.php');
 </head>
 <body>
 
-<div id="editor"><?php print htmlspecialchars($raw_content); ?></div>
 <div id="output-navbar">
     <div class="navbar-title-block">
         <img class="transparent-50 logo-php" src="images/logo-php.png">
         <span class="title">Diddle</span>
     </div>
-    <div class="navbar-notices">
-        <div id="notice-warning" class="notice-warning"></div>
+    <div class="navbar-notices-wrapper">
+        <div class="navbar-notices">
+            <div id="notice-warning" class="notice-warning"></div>
+        </div>
     </div>
     <div class="navbar-iconset">
         <a href="/diddle" target="_blank" title="New Diddle"><i class="glyphicon glyphicon-plus"></i></a>
-        <a href="c/<?php print DIDDLE_ID; ?>" target="_blank" title="Copy this Diddle"><i class="glyphicon glyphicon-copy"></i></a>
+        <a href="c/<?php print DIDDLE_ID; ?>" target="_blank" title="Clone this Diddle"><i class="glyphicon glyphicon-duplicate"></i></a>
         <a href="v/<?php print DIDDLE_ID; ?>" target="_blank" title="Open output in new window"><i class="glyphicon glyphicon-new-window"></i></a>
     </div>
     <div id="ui-spinner-updating" class="ui-actitivy-spinner hidden resize-50 lds-grid"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
 </div>
-<div id="output-wrapper">
-    <iframe id="output" src="v/<?php print DIDDLE_ID; ?>"></iframe>
-</div>
-<div id="output-statusbar">
-    <a href="https://github.com/raffi-ismail/lampodbc" target="_blank"><img class="logo logo-gh" src="images/logo-gh-cat.png"></a>
-    <a href="https://hub.docker.com/r/chubbycat/lampodbc" target="_blank"><img class="logo logo-dh" src="images/logo-dh.png"></a>
+<div class="content-wrapper">
+    <div id="editor"><?php print htmlspecialchars($raw_content); ?></div>
+    <div id="output-wrapper">
+        <iframe id="output" src="v/<?php print DIDDLE_ID; ?>"></iframe>
+        <div id="output-statusbar">
+            <a href="https://github.com/raffi-ismail/lampodbc" target="_blank"><img class="logo logo-gh" src="images/logo-gh-cat.png"></a>
+            <a href="https://hub.docker.com/r/chubbycat/lampodbc" target="_blank"><img class="logo logo-dh" src="images/logo-dh.png"></a>
+        </div>
+    </div>
 </div>
 <script src="js/lz-string.js" type="text/javascript" charset="utf-8"></script>
 <script src="js/ace/src-min-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
@@ -58,7 +62,11 @@ include_once('inc_init_sandbox.php');
 <?php 
 if (!get_current_sandbox()->did_diddler_diddle()) { 
 ?>
-    diddlerObject.set_navbar_warning_notice('You&rsquo;re currently viewing this Diddle in readonly mode');
+    diddlerObject.set_navbar_warning_notice(`
+    You&rsquo;re currently viewing this Diddle in readonly mode. Clone 
+    <a class="no-decorations text-yellow" href="c/<?php print DIDDLE_ID; ?>" target="_blank" title="Clone this Diddle"><i class="glyphicon glyphicon-duplicate"></i></a> 
+    this Diddle to make your own changes.
+    `);
 <?php 
 }
 ?>
