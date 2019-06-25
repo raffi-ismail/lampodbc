@@ -13,6 +13,11 @@ if (!isset($_COOKIE['v_id'])) {
     $visitor = new DiddleVisitor($visitor_id);
 }
 
+function get_uri_diddle_landing () {
+    return "{$_SERVER['REQUEST_SCHEME']}://{$_SERVER['SERVER_NAME']}/diddle/" . DIDDLE_ID;
+
+}
+
 function get_diddler () {
     global $visitor;
     return $visitor;
@@ -176,6 +181,7 @@ class DiddleSandbox {
         $json = json_encode( [ 'salt' => bin2hex($salt), 'hash' => $hash ] );
 
         touch($this->diddler_file);
+        chmod($this->file, 0666);
         $fsDiddler = fopen($this->diddler_file, 'w');
         fwrite($fsDiddler, $json); 
         fclose($fsDiddler);

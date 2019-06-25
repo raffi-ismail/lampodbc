@@ -44,14 +44,31 @@ html, body {
     color: #ffffff;
 }
 
+.ui-actitivy-spinner {
+    float: left;
+    z-index: 9999;
+}
+
+.pseudo-hidden {
+    overflow:hidden;
+    width:1px;
+    height:1px;
+    position:fixed;
+    right: -1px;
+}
+
+#text-url-copy {
+    width: 300px;
+    font-size: 10pt;
+    color: #000000;
+}
+
 .navbar-iconset {
-    margin: 0 5px 0 0;
     font-size: 16pt;
     display: inline-block;
     position: absolute;
     text-align: right;
-    width: 200px;
-    right: 5px;
+    right: 10px;
     top: 5px;
 }
 
@@ -79,7 +96,7 @@ html, body {
         display: flex;
         flex-direction: row;
     }
-    .content-wrapper > div {
+    .content-wrapper > div, .content-wrapper > iframe {
         display: flex;
         flex-direction: column;
         flex: 1;
@@ -96,13 +113,14 @@ html, body {
         display: flex;
         flex-direction: column;
     }
-    .content-wrapper > div {
+    .content-wrapper > div, .content-wrapper > iframe {
         display: flex;
         flex-direction: row;
         flex: 1;
         min-height: 40vh;
         height: 50%;
-    }    
+    }
+
     .navbar-notices {
         text-align: left;
     }
@@ -143,13 +161,6 @@ html, body {
     padding: 5px;
 }
 
-
-.ui-actitivy-spinner {
-    position: absolute;
-    top: 1px;
-    right:32px;
-}
-
 .hidden {
     display: none;
 }
@@ -160,9 +171,6 @@ html, body {
 
 .text-yellow, .text-yellow:hover {
     color: rgb(255, 187, 0);
-}
-
-    color: yellow;
 }
 
 .no-decorations {
@@ -188,4 +196,35 @@ html, body {
   
     /* Good browsers */
     opacity: 0.5;
+  }
+
+  .animated {
+    -webkit-animation-duration: .5s;
+    animation-duration: .5s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+    -webkit-animation-timing-function: linear;
+    animation-timing-function: linear;
+    animation-iteration-count: 3;
+    -webkit-animation-iteration-count: 2;
+  }
+  @-webkit-keyframes bounce {
+    0%, 100% {
+      -webkit-transform: translateY(0);
+    }
+    50% {
+      -webkit-transform: translateY(-5px);
+    }
+  }
+  @keyframes bounce {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-5px);
+    }
+  }
+  .bounce {
+    -webkit-animation-name: bounce;
+    animation-name: bounce;
   }

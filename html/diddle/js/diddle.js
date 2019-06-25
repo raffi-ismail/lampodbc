@@ -1,7 +1,3 @@
-document.getElementById('output').addEventListener('beforeunload', function(e) {
-    console.log('before iframe unload');
-});
-
 var JsonPostRequest = function(url) {
     return {
         send : function(data) {
@@ -21,7 +17,9 @@ var JsonPostRequest = function(url) {
                     console.error('Changed to', raw_string);
                     document.getElementById('output').contentWindow.location.reload();
                     var element = document.getElementById("ui-spinner-updating");
-                    element.classList.add("hidden");
+                    setTimeout(function(e) {
+                        element.classList.add("hidden");
+                    }, 1000);
                 }
             }
             var data = JSON.stringify(data);
@@ -55,10 +53,11 @@ Diddler.prototype.attempt_refresh_output = function () {
     this.refresh_keypress_timeout = setTimeout(function() {
         var a = _this.get_editor_syntax_errors();
         if (a.length) return;
-        var content = editor.getSession().getDocument().getValue();
-
         var element = document.getElementById("ui-spinner-updating");
         element.classList.remove("hidden");
+
+        var content = editor.getSession().getDocument().getValue();
+
 
         //*** not in use for now */
         //var dmp = new diff_match_patch();

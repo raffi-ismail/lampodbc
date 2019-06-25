@@ -22,12 +22,13 @@ include_once('inc_init_sandbox.php');
         <img class="transparent-50 logo-php" src="images/logo-php.png">
         <span class="title">Diddle</span>
     </div>
-    <div class="navbar-iconset">
+    <div id="nav-iconset" class="navbar-iconset">
         <a href="/diddle" target="_blank" title="New Diddle"><i class="glyphicon glyphicon-plus"></i></a>
         <a href="c/<?php print DIDDLE_ID; ?>" target="_blank" title="Clone this Diddle"><i class="glyphicon glyphicon-duplicate"></i></a>
+        <a id="link-url-copy" href="#" title="Copy the URL for this Diddle"><i class="glyphicon glyphicon-link"></i></a>
         <a href="v/<?php print DIDDLE_ID; ?>" target="_blank" title="Open output in new window"><i class="glyphicon glyphicon-new-window"></i></a>
+        <div class="pseudo-hidden"><input id="text-url-copy" type="text" value="<?php print get_uri_diddle_landing(); ?>"></div>
     </div>
-    <div id="ui-spinner-updating" class="ui-actitivy-spinner hidden resize-50 lds-grid"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
 </div>
 <div class="navbar-notices-wrapper">
     <div class="navbar-notices">
@@ -39,6 +40,7 @@ include_once('inc_init_sandbox.php');
     <div id="output-wrapper">
         <iframe id="output" src="v/<?php print DIDDLE_ID; ?>"></iframe>
         <div id="output-statusbar">
+            <div id="ui-spinner-updating" class="hidden resize-45 ui-actitivy-spinner"><div class="lds-grid"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></div>
             <a href="https://github.com/raffi-ismail/lampodbc" target="_blank"><img class="logo logo-gh" src="images/logo-gh-cat.png"></a>
             <a href="https://hub.docker.com/r/chubbycat/lampodbc" target="_blank"><img class="logo logo-dh" src="images/logo-dh.png"></a>
         </div>
@@ -63,7 +65,7 @@ include_once('inc_init_sandbox.php');
 if (!get_current_sandbox()->did_diddler_diddle()) { 
 ?>
     diddlerObject.set_navbar_warning_notice(`
-    Viewing this Diddle in readonly mode. Clone 
+    Read-only Diddle. Clone 
     <a class="no-decorations text-yellow larger" href="c/<?php print DIDDLE_ID; ?>" target="_blank" title="Clone this Diddle"><i class="glyphicon glyphicon-duplicate"></i></a> 
     to make your own changes.
     `);
@@ -84,9 +86,23 @@ if (get_current_sandbox()->did_diddler_diddle() || DEBUG_MODE) {
 <?php 
 } 
 ?>
-
+    
+    document.getElementById('link-url-copy').addEventListener('click', function(e) {
+        var texturl = document.getElementById('text-url-copy');
+        texturl.select();
+        document.execCommand("copy")
+        var elem = document.getElementById('nav-iconset')
+        var classlist = elem.classList
+        classlist.add("animated");
+        classlist.add("bounce");
+        setTimeout(function(e) {
+            classlist.remove('animated');
+            classlist.remove('bounce');
+        }, 1000);
+    });
 
 </script>
+
 
 </body>
 </html>

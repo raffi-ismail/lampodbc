@@ -7,10 +7,10 @@ $new_sandbox->init_assets();
 
 $old_fs_stream = fopen($sandbox->file, 'r');
 $new_fs_stream = fopen($new_sandbox->file, 'w');
+var_dump($sandbox->file, $new_sandbox->file);
+rewind($old_fs_stream);
 stream_copy_to_stream($old_fs_stream, $new_fs_stream);
-fclose($old_fs_stream);
-fclose($new_fs_stream);
-
+$f = file_get_contents($sandbox->file);
 header("location: /diddle/{$new_sandbox->id}");
 
 

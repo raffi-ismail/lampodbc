@@ -1,25 +1,23 @@
-.resize-50 {
-  -webkit-transform: scale(0.5); /* Saf3.1+, Chrome */
-     -moz-transform: scale(0.5); /* FF3.5+ */
-      -ms-transform: scale(0.5); /* IE9 */
-       -o-transform: scale(0.5); /* Opera 10.5+ */
-          transform: scale(0.5);
+.resize-45 {
+  -webkit-transform: scale(0.45); /* Saf3.1+, Chrome */
+     -moz-transform: scale(0.45); /* FF3.5+ */
+      -ms-transform: scale(0.45); /* IE9 */
+       -o-transform: scale(0.45); /* Opera 10.5+ */
+          transform: scale(0.45);
              /* IE6–IE9 */
              filter: progid:DXImageTransform.Microsoft.Matrix(M11=0.9999619230641713, M12=-0.008726535498373935, M21=0.008726535498373935, M22=0.9999619230641713,SizingMethod='auto expand');
 }​
 
 .lds-grid {
   display: inline-block;
-  position: relative;
-  width: 64px;
-  height: 64px;
 }
+
 .lds-grid div {
   position: absolute;
   width: 13px;
   height: 13px;
   border-radius: 50%;
-  background: #fff;
+  background: #00aa00;
   animation: lds-grid 1.2s linear infinite;
 }
 .lds-grid div:nth-child(1) {
