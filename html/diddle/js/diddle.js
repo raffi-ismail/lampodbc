@@ -1,3 +1,7 @@
+document.getElementById('output').addEventListener('beforeunload', function(e) {
+    console.log('before iframe unload');
+});
+
 var JsonPostRequest = function(url) {
     return {
         send : function(data) {

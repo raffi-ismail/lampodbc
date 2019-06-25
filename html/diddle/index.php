@@ -22,17 +22,17 @@ include_once('inc_init_sandbox.php');
         <img class="transparent-50 logo-php" src="images/logo-php.png">
         <span class="title">Diddle</span>
     </div>
-    <div class="navbar-notices-wrapper">
-        <div class="navbar-notices">
-            <div id="notice-warning" class="notice-warning"></div>
-        </div>
-    </div>
     <div class="navbar-iconset">
         <a href="/diddle" target="_blank" title="New Diddle"><i class="glyphicon glyphicon-plus"></i></a>
         <a href="c/<?php print DIDDLE_ID; ?>" target="_blank" title="Clone this Diddle"><i class="glyphicon glyphicon-duplicate"></i></a>
         <a href="v/<?php print DIDDLE_ID; ?>" target="_blank" title="Open output in new window"><i class="glyphicon glyphicon-new-window"></i></a>
     </div>
     <div id="ui-spinner-updating" class="ui-actitivy-spinner hidden resize-50 lds-grid"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+</div>
+<div class="navbar-notices-wrapper">
+    <div class="navbar-notices">
+        <div id="notice-warning" class="notice-warning"></div>
+    </div>
 </div>
 <div class="content-wrapper">
     <div id="editor"><?php print htmlspecialchars($raw_content); ?></div>
