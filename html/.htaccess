@@ -1,6 +1,7 @@
 <IfModule mod_rewrite.c>
     RewriteEngine On
     RewriteRule "^diddle/?$" "diddle/index.php" [L]
+    RewriteRule "^diddle/n/?$" "diddle/new.php" [L]
     RewriteRule "^diddle/([a-zA-Z0-9]+)/?$" "diddle/index.php?id=$1"    [L]
     RewriteRule "^diddle/v/([a-zA-Z0-9]+)/?$" "diddle/view.php?id=$1"   [L]
     RewriteRule "^diddle/c/([a-zA-Z0-9]+)/?$" "diddle/copy.php?id=$1"   [L]

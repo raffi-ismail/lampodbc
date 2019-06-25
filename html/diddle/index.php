@@ -23,7 +23,7 @@ include_once('inc_init_sandbox.php');
         <span class="title">Diddle</span>
     </div>
     <div id="nav-iconset" class="navbar-iconset">
-        <a href="/diddle" target="_blank" title="New Diddle"><i class="glyphicon glyphicon-plus"></i></a>
+        <a href="/diddle/n" target="_blank" title="New Diddle"><i class="glyphicon glyphicon-plus"></i></a>
         <a href="c/<?php print DIDDLE_ID; ?>" target="_blank" title="Clone this Diddle"><i class="glyphicon glyphicon-duplicate"></i></a>
         <a id="link-url-copy" href="#" title="Copy the URL for this Diddle"><i class="glyphicon glyphicon-link"></i></a>
         <a href="v/<?php print DIDDLE_ID; ?>" target="_blank" title="Open output in new window"><i class="glyphicon glyphicon-new-window"></i></a>
