@@ -77,6 +77,10 @@ html, body {
     display: inline-block;    
 }
 
+#diddle-refresh {
+    display: inline-block;
+}
+
 .navbar-notices-wrapper {
     background-color:#132e49;
 }
@@ -185,6 +189,16 @@ html, body {
     color: #000000;
     font-size:10pt;
     padding: 5px;
+}
+
+#output-statusbar > span.manual-refresh {
+    margin-top: 3px;
+    margin-left: 38%;
+    float: left;
+}
+
+#output-statusbar > span.manual-refresh > input {
+    font-size: 16pt;
 }
 
 .hidden {

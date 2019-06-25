@@ -12,8 +12,10 @@ document.getElementById('link-url-copy').addEventListener('click', function(e) {
     }, 1000);
 });
 
+document.getElementById('diddle-refresh').addEventListener('click', function(e) {
+    diddlerObject.refresh_output();
+});
 document.getElementById('diddle-password-set').addEventListener('click', function(e) {
     var elem = document.getElementById('nav-protectset');
     elem.classList.remove('hidden');
 })
-diddle-password-set

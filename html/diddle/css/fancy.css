@@ -105,3 +105,16 @@
 		transform: translateY(-48vh) scaleY(4);
 	}
 }
+
+.animate-refresh {
+	-webkit-animation: refresh-rotation 0.5s infinite ease;
+}
+
+@-webkit-keyframes refresh-rotation {
+	from {
+			-webkit-transform: rotate(0deg);
+	}
+	to {
+			-webkit-transform: rotate(359deg);
+	}
+}

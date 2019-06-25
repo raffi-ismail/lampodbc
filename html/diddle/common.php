@@ -202,3 +202,61 @@ class DiddleSandbox {
         fclose($f);
     }
 }
+
+class TextFile {
+    public $fileName;
+    private $fsFile, $fsBuffer;
+    
+    function __construct($fileName) {
+        $this->filename = $fileName;
+        $this->fsBuffer = fopen('php://temp', 'w');
+        $this->fsFile = fopen($fileName, 'r+');
+    }
+    
+    function __destruct() {
+        fclose ($this->fsFile);
+        fclose ($this->fsBuffer);
+    }
+    
+    function deleteTextAtline ($line) {
+        $nLine = 0;
+        rewind($this->fsBuffer);
+        rewind($this->fsFile);
+    
+        $size = 0;
+        while ($text = fgets($this->fsFile)) {
+            if ($nLine++ != $line) {
+                fputs($this->fsBuffer, $text);
+                $size += strlen($puts);
+            }
+        }
+        
+        ftruncate($this->fsFile, $size);
+        rewind($this->fsBuffer);
+        rewind($this->fsFile);
+        stream_copy_to_stream($this->fsBuffer, $this->fsFile);        
+    }
+    
+    function clearTextAtLine ($line) {
+        $this->replaceTextAtLine($line, " \n");
+    }
+    
+    function replaceTextAtLine ($line, $newText) {
+        $nLine = 0;
+        rewind($this->fsBuffer);
+        rewind($this->fsFile);
+        
+        $size = 0;
+        while ($text = fgets($this->fsFile)) {
+            $puts = ($nLine++ == $line) ? $newText : $text;
+            fputs($this->fsBuffer, $puts);
+            $size += strlen($puts);
+        }
+        
+        ftruncate($this->fsFile, $size);
+        rewind($this->fsBuffer);
+        rewind($this->fsFile);
+        stream_copy_to_stream($this->fsBuffer, $this->fsFile);
+    }
+    
+}

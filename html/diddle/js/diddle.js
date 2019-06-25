@@ -16,9 +16,9 @@ var JsonPostRequest = function(url) {
                     raw_string = editor.getSession().getDocument().getValue();
                     console.error('Changed to', raw_string);
                     document.getElementById('output').contentWindow.location.reload();
-                    var element = document.getElementById("ui-spinner-updating");
                     setTimeout(function(e) {
-                        element.classList.add("hidden");
+                        document.getElementById("ui-spinner-updating").classList.add("hidden");
+                        document.getElementById("diddle-refresh").classList.remove("animate-refresh");
                     }, 1000);
                 }
             }
@@ -53,23 +53,27 @@ Diddler.prototype.attempt_refresh_output = function () {
     this.refresh_keypress_timeout = setTimeout(function() {
         var a = _this.get_editor_syntax_errors();
         if (a.length) return;
-        var element = document.getElementById("ui-spinner-updating");
-        element.classList.remove("hidden");
-
-        var content = editor.getSession().getDocument().getValue();
-
-
-        //*** not in use for now */
-        //var dmp = new diff_match_patch();
-        //var patch_text = dmp.patch_toText(dmp.patch_make(raw_string, content));    
-        //if (content.length > patch_text.length) {
-        if (false) { // not using patching for now
-            var params = { id: diddle_id, patch_text: window.btoa(patch_text) };
-            _this.json_post.send(params);    
-        } else {
-            var params = { id: diddle_id, content_text: window.btoa(content) };
-            _this.json_post.send(params);
-        }
+        _this.refresh_output();
     }, 1000); // pause 1second without any further changes before refresh
+}
+
+Diddler.prototype.refresh_output = function () {
+    document.getElementById("ui-spinner-updating").classList.remove("hidden");
+    document.getElementById("diddle-refresh").classList.add("animate-refresh");
+    
+    var content = editor.getSession().getDocument().getValue();
+
+
+    //*** not in use for now */
+    //var dmp = new diff_match_patch();
+    //var patch_text = dmp.patch_toText(dmp.patch_make(raw_string, content));    
+    //if (content.length > patch_text.length) {
+    if (false) { // not using patching for now
+        var params = { id: diddle_id, patch_text: window.btoa(patch_text) };
+        this.json_post.send(params);    
+    } else {
+        var params = { id: diddle_id, content_text: window.btoa(content) };
+        this.json_post.send(params);
+    }    
 }
 
