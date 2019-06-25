@@ -24,11 +24,53 @@ html, body {
     height: auto;
 }
 
-#output-navbar .navbar-title-block { 
+
+.navbar-set {
+    display: inline-block;
+    top: 5px;
+    margin-left: 20px;
+}
+
+.navbar-set input[type] {
+    font-size: 10pt;
+    margin-top: 3px;
+    padding: 2px;
+    border: none;
+    color: #000000;
+    background-color: #dddddd;
+}
+
+
+.navbar-set.navbar-title-block { 
     float: left;
     font-size:16pt;
     margin:  2px 0 0 0;
     padding: 0;
+}
+ 
+.navbar-set.navbar-iconset {
+    float: right;
+    text-align: right;
+    font-size: 16pt;    
+    right: 10px;
+}
+
+.navbar-set.navbar-protectset {
+    float: right;
+    padding: 3px 10px;
+    background-color:#19324b;
+}
+
+.navbar-set.navbar-iconset > a {
+    margin: 0 1px;
+    color: #aaaaaa;
+    text-decoration: none;
+    font-weight: 200;
+    font-size: 12pt;
+}
+
+.navbar-set.navbar-iconset > a:hover {
+    color: #ffffff;
 }
 
 .title {
@@ -67,26 +109,6 @@ html, body {
     color: #000000;
 }
 
-.navbar-iconset {
-    font-size: 16pt;
-    display: inline-block;
-    position: absolute;
-    text-align: right;
-    right: 10px;
-    top: 5px;
-}
-
-.navbar-iconset > a {
-    margin: 0 1px;
-    color: #aaaaaa;
-    text-decoration: none;
-    font-weight: 200;
-    font-size: 12pt;
-}
-
-.navbar-iconset > a:hover {
-    color: #ffffff;
-}
 
 .content-wrapper {
     display: flex;

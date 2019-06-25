@@ -19,16 +19,22 @@ include_once('inc_init_sandbox.php');
 <body>
 
 <div id="output-navbar">
-    <div class="navbar-title-block">
+    <div class="navbar-set navbar-title-block">
         <img class="transparent-50 logo-php" src="images/logo-php.png">
         <div class="title fancy word"><span>D</span><span>i</span><span>d</span><span>d</span><span>L</span><span>e</span></div>
     </div>
-    <div id="nav-iconset" class="navbar-iconset">
+    <div id="nav-iconset" class="navbar-set navbar-iconset">
         <a href="/diddle/n" target="_blank" title="New Diddle"><i class="glyphicon glyphicon-plus"></i></a>
         <a href="c/<?php print DIDDLE_ID; ?>" target="_blank" title="Clone this Diddle"><i class="glyphicon glyphicon-duplicate"></i></a>
+        <a id="diddle-password-set" href="#" title="Set a password on this Diddle"><i class="glyphicon glyphicon-lock"></i></a>
         <a id="link-url-copy" href="#" title="Copy the URL for this Diddle"><i class="glyphicon glyphicon-link"></i></a>
         <a href="v/<?php print DIDDLE_ID; ?>" target="_blank" title="Open output in new window"><i class="glyphicon glyphicon-new-window"></i></a>
         <div class="pseudo-hidden"><input id="text-url-copy" type="text" value="<?php print get_uri_diddle_landing(); ?>"></div>
+    </div>
+    <div id="nav-protectset" class="navbar-set navbar-protectset hidden">
+        Set a password on this Diddle
+        <input id="param-fiddle-password" type="password">
+        <input type="submit" value="OK">
     </div>
 </div>
 <div class="navbar-notices-wrapper">
@@ -69,7 +75,7 @@ if (!get_current_sandbox()->did_diddler_diddle()) {
     diddlerObject.set_navbar_warning_notice(`
     Read-only Diddle. Clone 
     <a class="no-decorations text-yellow larger" href="c/<?php print DIDDLE_ID; ?>" target="_blank" title="Clone this Diddle"><i class="glyphicon glyphicon-duplicate"></i></a> 
-    to make your own changes.
+    to make changes.
     `);
 <?php 
 }
@@ -88,23 +94,9 @@ if (get_current_sandbox()->did_diddler_diddle() || DEBUG_MODE) {
 <?php 
 } 
 ?>
-    
-    document.getElementById('link-url-copy').addEventListener('click', function(e) {
-        var texturl = document.getElementById('text-url-copy');
-        texturl.select();
-        document.execCommand("copy")
-        var elem = document.getElementById('nav-iconset')
-        var classlist = elem.classList
-        classlist.add("animated");
-        classlist.add("bounce");
-        setTimeout(function(e) {
-            classlist.remove('animated');
-            classlist.remove('bounce');
-        }, 1000);
-    });
-
 </script>
 
+<script src="js/lastloaded.js"></script>
 
 </body>
 </html>
