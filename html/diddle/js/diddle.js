@@ -73,4 +73,3 @@ Diddler.prototype.attempt_refresh_output = function () {
     }, 1000); // pause 1second without any further changes before refresh
 }
 
-

@@ -31,6 +31,10 @@ html, body {
     padding: 0;
 }
 
+.title {
+    display: inline-block;    
+}
+
 .navbar-notices-wrapper {
     background-color:#132e49;
 }

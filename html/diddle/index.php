@@ -13,6 +13,7 @@ include_once('inc_init_sandbox.php');
 <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="css/editor.css">
 <link rel="stylesheet" type="text/css" href="css/loader.css">
+<link rel="stylesheet" type="text/css" href="css/fancy.css">
 
 </head>
 <body>
@@ -20,7 +21,7 @@ include_once('inc_init_sandbox.php');
 <div id="output-navbar">
     <div class="navbar-title-block">
         <img class="transparent-50 logo-php" src="images/logo-php.png">
-        <span class="title">Diddle</span>
+        <div class="title fancy word"><span>D</span><span>i</span><span>d</span><span>d</span><span>L</span><span>e</span></div>
     </div>
     <div id="nav-iconset" class="navbar-iconset">
         <a href="/diddle/n" target="_blank" title="New Diddle"><i class="glyphicon glyphicon-plus"></i></a>
@@ -49,7 +50,8 @@ include_once('inc_init_sandbox.php');
 <script src="js/lz-string.js" type="text/javascript" charset="utf-8"></script>
 <script src="js/ace/src-min-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
 <script src="js/diff_match_patch.js" ></script>
-<script src="js/diddle.js" ></script>
+<script src="js/diddle.js"></script>
+<script src="js/fancy.js"></script>
 <script>
     var raw_string = `<?php echo $raw_content; ?>`;
     var diddle_id = '<?php echo DIDDLE_ID; ?>';
