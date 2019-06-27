@@ -13,7 +13,7 @@ document.getElementById('link-url-copy').addEventListener('click', function(e) {
 });
 
 document.getElementById('diddle-refresh').addEventListener('click', function(e) {
-    diddlerObject.refresh_output();
+    diddlerObject.refresh_output(manually_triggered = true);
 });
 document.getElementById('diddle-password-set').addEventListener('click', function(e) {
     var elem = document.getElementById('nav-protectset');

@@ -204,59 +204,209 @@ class DiddleSandbox {
 }
 
 class TextFile {
-    public $fileName;
-    private $fsFile, $fsBuffer;
+    private $fsFile, $fsFileBuffer, $fsOutBuffer;
     
     function __construct($fileName) {
-        $this->filename = $fileName;
-        $this->fsBuffer = fopen('php://temp', 'w');
         $this->fsFile = fopen($fileName, 'r+');
-    }
-    
-    function __destruct() {
-        fclose ($this->fsFile);
-        fclose ($this->fsBuffer);
-    }
-    
-    function deleteTextAtline ($line) {
-        $nLine = 0;
-        rewind($this->fsBuffer);
+        $this->fsFileBuffer = fopen('php://temp', 'r+');
+        $this->fsOutBuffer = fopen('php://temp', 'w');
         rewind($this->fsFile);
+        rewind($this->fsFileBuffer);
+        rewind($this->fsOutBuffer);
+        stream_copy_to_stream($this->fsFile, $this->fsFileBuffer);
+    }
+
+    function __destruct() {
+        $this->close();
+    }
+
+    function getBufferStream () {
+        return $this->fsFileBuffer;
+    }
+
+    function getAllText () {
+        $lines = '';
+        rewind($this->fsFileBuffer);
+        while ($line = fgets($this->fsFileBuffer)) {
+            $lines .= $line;
+        }
+        rewind($this->fsFileBuffer);
+        return $lines;
+    }
+
+    function getTextAtLine ($line) {
+        rewind($this->fsFileBuffer);
+        $nLine = 0;
+        while ($text = fgets($this->fsFileBuffer)) {
+            if ($nLine++ == $line) {
+                rewind($this->fsFileBuffer);
+                return $text;
+            }
+        }
+        rewind($this->fsFileBuffer);
+        return null;
+    }
     
+    function saveFile () {        
+        rewind($this->fsFile);
+        rewind($this->fsFileBuffer);
+        $r = stream_copy_to_stream($this->fsFileBuffer, $this->fsFile);
+        ftruncate($this->fsFile, $r);
+        fflush ( $this->fsFile );
+        return $r;
+    }
+
+    function close () {
+        fclose ($this->fsFile);
+        fclose ($this->fsFileBuffer);
+        fclose ($this->fsOutBuffer);
+
+    }
+
+    function insertText ($startLine, $startColumn, $endLine, $endColumn, $textLines) {
+        rewind($this->fsFileBuffer);
+        rewind($this->fsOutBuffer);
+        
         $size = 0;
-        while ($text = fgets($this->fsFile)) {
+        $nLine = 0;
+        while(!feof($this->fsFileBuffer) && $nLine < $startLine) {
+            $text = fgets($this->fsFileBuffer);
+            fputs($this->fsOutBuffer, $text);
+            $nLine++;
+        }
+        if ($nLine == $startLine && $startColumn > 0) {
+            $start = fread($this->fsFileBuffer, $startColumn);
+            fputs($this->fsOutBuffer, $start);
+        }
+        foreach($textLines as $textLine) {
+            fputs($this->fsOutBuffer, $textLine);
+            if ($nLine < $endLine) {
+                fputs($this->fsOutBuffer, "\n");
+            }
+            $nLine++;
+        }
+        while(!feof($this->fsFileBuffer)) {
+            $text = fgets($this->fsFileBuffer);
+            fputs($this->fsOutBuffer, $text);
+            $nLine++;
+        }
+
+        rewind($this->fsFileBuffer);
+        rewind($this->fsOutBuffer);
+        stream_copy_to_stream($this->fsOutBuffer, $this->fsFileBuffer);       
+    }
+
+    function deleteText ($startLine, $startColumn, $endLine, $endColumn) {
+        rewind($this->fsFileBuffer);
+        rewind($this->fsOutBuffer);
+
+        $nLine = 0;
+        while (!feof($this->fsFileBuffer)) {
+            if ($nLine < $startLine || $nLine > $endLine) {
+                $text = fgets($this->fsFileBuffer);
+                fputs($this->fsOutBuffer, $text);
+            } elseif ($nLine == $startLine) {
+                $text = fread($this->fsFileBuffer, $startColumn);
+                $size += strlen($text);
+                fputs($this->fsOutBuffer, $text);
+                if ($nLine == $endLine) {
+                    fseek($this->fsFileBuffer, 0 - $startColumn + $endColumn, SEEK_CUR);
+                    $text = fgets($this->fsFileBuffer);
+                    fputs($this->fsOutBuffer, $text);
+                }
+            } elseif ($endColumn > 0) {
+                fseek($this->fsFileBuffer, $endColumn, SEEK_CUR);
+                $text = fgets($this->fsFileBuffer);
+                fputs($this->fsOutBuffer, $text);
+            } else {
+                $text = fgets($this->fsFileBuffer);
+            }
+            $nLine++;
+        }
+        
+        $size = ftell($this->fsOutBuffer);
+        ftruncate($this->fsFileBuffer, $size);
+        ftruncate($this->fsOutBuffer, $size);
+        rewind($this->fsFileBuffer);
+        rewind($this->fsOutBuffer);
+        stream_copy_to_stream($this->fsOutBuffer, $this->fsFileBuffer);              
+    }
+
+    function deleteTextAtline ($line) {
+        rewind($this->fsFileBuffer);
+        rewind($this->fsOutBuffer);
+        
+        $size = 0;
+        $nLine = 0;
+        while ($text = fgets($this->fsFileBuffer)) {
             if ($nLine++ != $line) {
-                fputs($this->fsBuffer, $text);
-                $size += strlen($puts);
+                fputs($this->fsOutBuffer, $text);
+                $size += strlen($text);
             }
         }
         
-        ftruncate($this->fsFile, $size);
-        rewind($this->fsBuffer);
-        rewind($this->fsFile);
-        stream_copy_to_stream($this->fsBuffer, $this->fsFile);        
+        ftruncate($this->fsFileBuffer, $size);
+        ftruncate($this->fsOutBuffer, $size);
+        rewind($this->fsFileBuffer);
+        rewind($this->fsOutBuffer);
+        stream_copy_to_stream($this->fsOutBuffer, $this->fsFileBuffer);        
     }
     
     function clearTextAtLine ($line) {
-        $this->replaceTextAtLine($line, " \n");
+        $this->replaceTextAtLine($line, "\n");
+    }
+
+    function insertTextBeforeLine ($line, $newText) {
+        rewind($this->fsFileBuffer);
+        rewind($this->fsOutBuffer);
+        
+        $nLine = 0;
+        while ($text = fgets($this->fsFileBuffer)) {
+            if ($nLine++ == $line) {
+                fputs($this->fsOutBuffer, $newText);
+            }
+            fputs($this->fsOutBuffer, $text);
+        }
+        
+        rewind($this->fsFileBuffer);
+        rewind($this->fsOutBuffer);
+        stream_copy_to_stream($this->fsOutBuffer, $this->fsFileBuffer);        
     }
     
-    function replaceTextAtLine ($line, $newText) {
+    function insertTextAfterLine ($line, $newText) {
+        rewind($this->fsFileBuffer);
+        rewind($this->fsOutBuffer);
+        
         $nLine = 0;
-        rewind($this->fsBuffer);
-        rewind($this->fsFile);
+        while ($text = fgets($this->fsFileBuffer)) {
+            fputs($this->fsOutBuffer, $text);
+            if ($nLine++ == $line) {
+                fputs($this->fsOutBuffer, $newText);
+            }
+        }
+        
+        rewind($this->fsFileBuffer);
+        rewind($this->fsOutBuffer);
+        stream_copy_to_stream($this->fsOutBuffer, $this->fsFileBuffer);        
+    }
+
+    function replaceTextAtLine ($line, $newText, $startChar = 0) {
+        rewind($this->fsFileBuffer);
+        rewind($this->fsOutBuffer);
         
         $size = 0;
+        $nLine = 0;
         while ($text = fgets($this->fsFile)) {
             $puts = ($nLine++ == $line) ? $newText : $text;
-            fputs($this->fsBuffer, $puts);
+            fputs($this->fsOutBuffer, $puts);
             $size += strlen($puts);
         }
         
-        ftruncate($this->fsFile, $size);
-        rewind($this->fsBuffer);
-        rewind($this->fsFile);
-        stream_copy_to_stream($this->fsBuffer, $this->fsFile);
+        ftruncate($this->fsFileBuffer, $size);
+        ftruncate($this->fsOutBuffer, $size);
+        rewind($this->fsFileBuffer);
+        rewind($this->fsOutBuffer);
+        stream_copy_to_stream($this->fsOutBuffer, $this->fsFileBuffer);
     }
     
 }

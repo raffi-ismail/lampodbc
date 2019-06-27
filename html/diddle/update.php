@@ -28,41 +28,56 @@ if (!$sandbox->did_diddler_diddle() && !DEBUG_MODE) {
     exit;
 }
 
-$file_contents = file_get_contents($sandbox->file);
-$patch_text_raw = isset($json['patch_text']) ? $json['patch_text'] : false;
-$content_text_raw = isset($json['content_text']) ? $json['content_text'] : false;
-$patch_text = base64_decode($patch_text_raw);
-$content_text = base64_decode($content_text_raw);
 
-if (!$patch_text) {
+$textFile = new TextFile($sandbox->file);
+if (isset($json['deltas'])) {
+    $deltas = $json['deltas'];
+    if ($deltas.length) {
+        foreach($deltas as $delta) {
+            list($start_row, $start_col) = $delta['<'];
+            list($end_row, $end_col) = $delta['>'];
+            if ($delta['@'] == '+') {
+                $textFile->insertText ($start_row, $start_col, $end_row, $end_col, $delta['$']);
+            } else if ($delta['@'] == '-') {
+                $textFile->deleteText ($start_row, $start_col, $end_row, $end_col);
+            }
+        }
+    }
+    $a = $textFile->getAllText();
+    $s = $textFile->saveFile();
+    $textFile->close();
+    $return = [
+        'id' => $sandbox->id,
+        'deltas' => $deltas,
+        'content' => $a,
+        's' => $s
+    ];
+    
+} else {
+    $file_contents = $textFile->getAllText();
+    $content_text_raw = isset($json['content_text']) ? $json['content_text'] : false;
+    $content_text = base64_decode($content_text_raw);
     if (!$content_text) {
         header('content-type: text/plain', true, 403);
         print 'invalid update';
+        exit;    
+    }
+    try {
+        $sandbox->update_code($content_text);
+    } catch (Exception $ex) {
+        header('content-type: text/plain', true, 403);
+        print "An error occured while trying to update the Diddle: " . $ex->getMessage();
         exit;
     }
+    $return = [
+        'id' => $sandbox->id,
+        'content' => $content_text,
+        'checksum' => $sandbox->checksum,
+        'chainsum' => $sandbox->chainsum,
+        'original_content' => $file_contents,
+    ];
 }
 
-$patch = false;
-$patched_text = false;
-
-$new_text = $patched_text ? $patched_text : $content_text;
-try {
-    $sandbox->update_code($new_text);
-} catch (Exception $ex) {
-    header('content-type: text/plain', true, 403);
-    print "An error occured while trying to update the Diddle: " . $ex->getMessage();
-    exit;
-}
-
-$return = [
-    'id' => $sandbox->id,
-    'contents' => $new_text,
-    'checksum' => $sandbox->checksum,
-    'chainsum' => $sandbox->chainsum,
-    'patch_applied' => json_decode(json_encode($patch), true),
-    'patch_text' => $patch_text,
-    'original_content' => $file_contents
-];
 
 header('content-type: application/json');
 print json_encode($return);

@@ -53,7 +53,7 @@
         </div>
     </div>
 </div>
-<script src="js/ace/src-min-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/ace/src-min/ace.js" type="text/javascript" charset="utf-8"></script>
 <script src="js/diff_match_patch.js" ></script>
 <script src="js/diddle.js"></script>
 <script src="js/fancy.js"></script>
@@ -75,6 +75,8 @@
 
 <?php  if (get_current_sandbox()->did_diddler_diddle() || DEBUG_MODE) { ?>
     editor.on('change', function(delta) {
+        console.error('Changes delta:', delta);
+        diddlerObject.parse_editor_deltas(delta);
         if (!document.getElementById("opt-manual-refresh").checked) {
             diddlerObject.attempt_refresh_output();
         }
