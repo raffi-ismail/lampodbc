@@ -53,7 +53,7 @@
         </div>
     </div>
 </div>
-<script src="js/ace/src-min/ace.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/ace/src-min-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
 <script src="js/diff_match_patch.js" ></script>
 <script src="js/diddle.js"></script>
 <script src="js/fancy.js"></script>
