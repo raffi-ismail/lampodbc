@@ -70,7 +70,7 @@ RUN chmod +x /var/startup.sh
 
 #WORKDIR /var/www/html/diddle
 
-ENV DEFAULT_LISTEN_PORT_HTTP $PORT
+ENV DEFAULT_LISTEN_PORT_HTTP 80
 #-- Not used at the moment ---
 #ENV DEFAULT_WEB_LISTEN_PORT_HTTPS
 
