@@ -58,7 +58,7 @@
 <script src="js/diddle.js"></script>
 <script src="js/fancy.js"></script>
 <script>
-    //var raw_string = `<?php echo $raw_content; ?>`;
+    //var raw_string = `<?php //echo $raw_content; ?>`;
     var diddle_id = '<?php echo DIDDLE_ID; ?>';
     var editor = ace.edit("editor");
     editor.setTheme("ace/theme/solarized_dark");
