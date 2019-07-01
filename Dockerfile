@@ -70,7 +70,11 @@ RUN chmod +x /var/startup.sh
 
 #WORKDIR /var/www/html/diddle
 
-EXPOSE 2222 443 80 
+ENV DEFAULT_LISTEN_PORT_HTTP $PORT
+#-- Not used at the moment ---
+#ENV DEFAULT_WEB_LISTEN_PORT_HTTPS
+
+EXPOSE 2222 443 $PORT
 
 
 ENTRYPOINT ["/var/startup.sh"] 

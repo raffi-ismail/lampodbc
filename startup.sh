@@ -1,6 +1,7 @@
 #!/bin/sh
 
 ENV_JSON=/var/www/env.json
+if [ -z ${DEFAULT_LISTEN_PORT_HTTP} ]; then PORT=80; fi;
 
 printenv | jq --raw-input --slurp \
     'split("\n")[:-1] | map(split("=")) | map_values ( { (.[0]) : (.[1:]) | join("=") } ) | add' \
