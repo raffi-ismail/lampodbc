@@ -8,6 +8,7 @@
     <meta property="og:url" content="https:////azurefiddle.com/diddle/<?php echo DIDDLE_ID; ?>">
     <title>PHP|Diddle</title>
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/fonts.css">
     <link rel="stylesheet" type="text/css" href="css/editor.css">
     <link rel="stylesheet" type="text/css" href="css/loader.css">
     <link rel="stylesheet" type="text/css" href="css/fancy.css">
@@ -21,11 +22,11 @@
     </div>
     <div id="nav-iconset" class="navbar-set navbar-iconset">
         <a href="/diddle/n" target="_blank" title="New Diddle"><i class="glyphicon glyphicon-plus"></i></a>
-        <a href="c/<?php print DIDDLE_ID; ?>" target="_blank" title="Clone this Diddle"><i class="glyphicon glyphicon-duplicate"></i></a>
+        <a href="c/<?php print DIDDLE_ID; ?>" target="_blank" title="Fork this Diddle"><span class="icon-code-fork"></span></a>
         <a id="diddle-password-set" class="hidden" href="#" title="Set a password on this Diddle"><i class="glyphicon glyphicon-lock"></i></a>
-        <a id="link-url-copy" href="#" title="Copy the URL for this Diddle"><i class="glyphicon glyphicon-link"></i></a>
-        <a id="diddle-refresh" href="#" title="Refresh Diddle output"><i class="glyphicon glyphicon-refresh"></i></a>
-        <a href="v/<?php print DIDDLE_ID; ?>" target="_blank" title="Open output in new window"><i class="glyphicon glyphicon-new-window"></i></a>
+        <a id="link-url-copy" href="#" title="Copy the URL for this Diddle"><span class="icon-link"></span></a>
+        <a id="diddle-refresh" href="#" title="Refresh Diddle output"><span class="icon-refresh"></span></a>
+        <a href="v/<?php print DIDDLE_ID; ?>" target="_blank" title="Open output in new window"><span class="icon-external-link"></span></a>
         <div class="pseudo-hidden"><input id="text-url-copy" type="text" value="<?php print get_uri_diddle_landing(); ?>"></div>
     </div>
     <div id="nav-protectset" class="navbar-set navbar-protectset hidden">
@@ -46,7 +47,7 @@
         <div id="output-statusbar">
             <div id="ui-spinner-updating" class="hidden resize-45 ui-actitivy-spinner"><div class="lds-grid"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></div>
             <span class="manual-refresh">
-                <input id="opt-manual-refresh" type="checkbox">&nbsp;Manual refresh
+                <input id="opt-manual-refresh" type="checkbox">&nbsp;Manual <button id="refresh-output" class="button">refresh</button>
             </span>
             <a href="https://github.com/raffi-ismail/lampodbc" target="_blank"><img class="logo logo-gh" src="images/logo-gh-cat.png"></a>
             <a href="https://hub.docker.com/r/chubbycat/lampodbc" target="_blank"><img class="logo logo-dh" src="images/logo-dh.png"></a>
@@ -68,9 +69,9 @@
     const diddlerObject = new Diddler('update.php');
 
 <?php if (!get_current_sandbox()->did_diddler_diddle()) { ?>
-    diddlerObject.set_navbar_warning_notice(`Read-only Diddle. Clone 
-    <a class="no-decorations text-yellow larger" href="c/<?php print DIDDLE_ID; ?>" target="_blank" title="Clone this Diddle">
-    <i class="glyphicon glyphicon-duplicate"></i></a> to make changes.`);
+    diddlerObject.set_navbar_warning_notice(`Read-only Diddle. Fork 
+    <a class="no-decorations text-yellow larger" href="c/<?php print DIDDLE_ID; ?>" target="_blank" title="Fork this Diddle">
+    <i class="icon-code-fork"></i></a> to make changes.`);
 <?php } ?>
 
 <?php  if (get_current_sandbox()->did_diddler_diddle() || DEBUG_MODE) { ?>
