@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'icomoon';
-  src:  url('fonts/icomoon.eot?glnris');
-  src:  url('fonts/icomoon.eot?glnris#iefix') format('embedded-opentype'),
-    url('fonts/icomoon.ttf?glnris') format('truetype'),
-    url('fonts/icomoon.woff?glnris') format('woff'),
-    url('fonts/icomoon.svg?glnris#icomoon') format('svg');
+  src:  url('fonts/icomoon.eot?tk920z');
+  src:  url('fonts/icomoon.eot?tk920z#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?tk920z') format('truetype'),
+    url('fonts/icomoon.woff?tk920z') format('woff'),
+    url('fonts/icomoon.svg?tk920z#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -24,30 +24,24 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-reload-alt:before {
-  content: "\e900";
+.icon-check-alt:before {
+  content: "\e903";
 }
-.icon-refresh:before {
-  content: "\e900";
+.icon-spinner11:before {
+  content: "\e984";
 }
-.icon-reset:before {
-  content: "\e900";
+.icon-link:before {
+  content: "\e9cb";
 }
-.icon-arrow:before {
-  content: "\e900";
-}
-.icon-plus:before {
-  content: "\e901";
+.icon-radio-unchecked:before {
+  content: "\ea56";
 }
 .icon-external-link:before {
   content: "\e902";
 }
-.icon-chain:before {
-  content: "\e903";
-}
-.icon-link:before {
-  content: "\e903";
-}
 .icon-code-fork:before {
-  content: "\e904";
+  content: "\e900";
+}
+.icon-plus:before {
+  content: "\e901";
 }

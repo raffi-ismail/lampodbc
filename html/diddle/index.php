@@ -21,11 +21,11 @@
         <div class="title fancy word"><span>D</span><span>i</span><span>d</span><span>d</span><span>L</span><span>e</span></div>
     </div>
     <div id="nav-iconset" class="navbar-set navbar-iconset">
-        <a href="/diddle/n" target="_blank" title="New Diddle"><i class="glyphicon glyphicon-plus"></i></a>
+        <a href="/diddle/n" target="_blank" title="New Diddle"><i class="icon-plus"></i></a>
         <a href="c/<?php print DIDDLE_ID; ?>" target="_blank" title="Fork this Diddle"><span class="icon-code-fork"></span></a>
         <a id="diddle-password-set" class="hidden" href="#" title="Set a password on this Diddle"><i class="glyphicon glyphicon-lock"></i></a>
         <a id="link-url-copy" href="#" title="Copy the URL for this Diddle"><span class="icon-link"></span></a>
-        <a id="diddle-refresh" href="#" title="Refresh Diddle output"><span class="icon-refresh"></span></a>
+        <a id="diddle-refresh" href="#" title="Refresh Diddle output"><span class="icon-spinner11"></span></a>
         <a href="v/<?php print DIDDLE_ID; ?>" target="_blank" title="Open output in new window"><span class="icon-external-link"></span></a>
         <div class="pseudo-hidden"><input id="text-url-copy" type="text" value="<?php print get_uri_diddle_landing(); ?>"></div>
     </div>
@@ -47,7 +47,12 @@
         <div id="output-statusbar">
             <div id="ui-spinner-updating" class="hidden resize-45 ui-actitivy-spinner"><div class="lds-grid"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></div>
             <span class="manual-refresh">
-                <input id="opt-manual-refresh" type="checkbox">&nbsp;Manual <button id="refresh-output" class="button">refresh</button>
+                <input id="opt-manual-refresh" type="checkbox" />
+                <span class="checkbox-icons" for="opt-manual-refresh">
+                    <span class="checkbox-icon unchecked icon-radio-unchecked"></span>
+                    <span class="checkbox-icon checked icon-check-alt"></span>
+                </span>
+                <span class="label-manual-refresh">&nbsp;Manually&nbsp;</span><span id="refresh-output" class="button">refresh</span>
             </span>
             <a href="https://github.com/raffi-ismail/lampodbc" target="_blank"><img class="logo logo-gh" src="images/logo-gh-cat.png"></a>
             <a href="https://hub.docker.com/r/chubbycat/lampodbc" target="_blank"><img class="logo logo-dh" src="images/logo-dh.png"></a>
@@ -69,9 +74,9 @@
     const diddlerObject = new Diddler('update.php');
 
 <?php if (!get_current_sandbox()->did_diddler_diddle()) { ?>
-    diddlerObject.set_navbar_warning_notice(`Read-only Diddle. Fork 
+    diddlerObject.set_navbar_warning_notice(`Read-only Diddle. 
     <a class="no-decorations text-yellow larger" href="c/<?php print DIDDLE_ID; ?>" target="_blank" title="Fork this Diddle">
-    <i class="icon-code-fork"></i></a> to make changes.`);
+    Fork</a> this Diddlc to make changes.`);
 <?php } ?>
 
 <?php  if (get_current_sandbox()->did_diddler_diddle() || DEBUG_MODE) { ?>

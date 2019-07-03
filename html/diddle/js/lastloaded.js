@@ -24,3 +24,15 @@ document.getElementById('diddle-password-set').addEventListener('click', functio
     var elem = document.getElementById('nav-protectset');
     elem.classList.remove('hidden');
 })
+
+document.querySelector('.checkbox-icon.checked').addEventListener('click', function(e) {
+    var checkbox_id = this.parentElement.getAttribute('for');
+    var checkbox = document.getElementById(checkbox_id);
+    checkbox.checked = false;
+});
+
+document.querySelector('.checkbox-icon.unchecked').addEventListener('click', function(e) {
+    var checkbox_id = this.parentElement.getAttribute('for');
+    var checkbox = document.getElementById(checkbox_id);
+    checkbox.checked = true;
+});

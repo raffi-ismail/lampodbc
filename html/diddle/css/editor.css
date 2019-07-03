@@ -306,4 +306,30 @@ html, body {
 	top:1px;
 }
 
-        
+.checkbox-icon {
+    position: relative;
+    top: 0.2em;
+    font-size: 1.6em;
+    cursor: pointer;
+    color: #1d00a9;
+}
+
+input[type="checkbox"] {
+    display: none;
+}
+
+input[type="checkbox"]:checked ~ .checkbox-icons .checkbox-icon.unchecked  {
+    display:none;
+}
+input[type="checkbox"]:checked ~ .checkbox-icons .checkbox-icon.checked  {
+    display:inherit;
+}
+
+input[type="checkbox"]:not(checked) ~ .checkbox-icons .checkbox-icon.checked  {
+    display:none;
+}
+input[type="checkbox"]:not(checked) ~ .checkbox-icons .checkbox-icon.unchecked  {
+    display:inherit;
+}
+
+
