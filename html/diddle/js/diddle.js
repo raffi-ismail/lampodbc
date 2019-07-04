@@ -18,9 +18,9 @@ var JsonPostRequest = function(url) {
                     //console.error('Changed to', raw_string);
                     document.getElementById('output').contentWindow.location.reload();
                     setTimeout(function(e) {
-                        document.getElementById("ui-spinner-updating").classList.add("hidden");
+                        // document.getElementById("ui-spinner-updating").classList.add("hidden");
                         document.getElementById("diddle-refresh").classList.remove("animate-refresh");
-                    }, 1000);
+                    }, 500);
                 }
             }
             var data = JSON.stringify(data);

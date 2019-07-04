@@ -4,14 +4,16 @@
 
 .divider_vertical,
 .divider_horizontal {
-  background: #888;
+  background: #132e49;
 }
 .divider_vertical.dragged,
 .divider_horizontal.dragged {
   background: #357ec7;
+  border: 0px outset #357ec7;
 }
 .divider_vertical {
-  width: 3px;
+  background: #BABABA;
+  width: 5px;
   cursor: ew-resize;
 }
 .divider_horizontal {
