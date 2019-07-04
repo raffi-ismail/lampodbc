@@ -18,7 +18,7 @@ var JsonPostRequest = function(url) {
                     //console.error('Changed to', raw_string);
                     document.getElementById('output').contentWindow.location.reload();
                     setTimeout(function(e) {
-                        // document.getElementById("ui-spinner-updating").classList.add("hidden");
+                        //document.getElementById("loader-cube-animation").classList.add("hidden");
                         document.getElementById("diddle-refresh").classList.remove("animate-refresh");
                     }, 500);
                 }
@@ -114,7 +114,7 @@ Diddler.prototype.attempt_refresh_output = function () {
 
 Diddler.prototype.refresh_output = function (manually_triggered) {
     manually_triggered = manually_triggered === true || false;
-    //document.getElementById("ui-spinner-updating").classList.remove("hidden");
+    //document.getElementById("loader-cube-animation").classList.remove("hidden");
     document.getElementById("diddle-refresh").classList.add("animate-refresh");
     
     var content = editor.getSession().getDocument().getValue();

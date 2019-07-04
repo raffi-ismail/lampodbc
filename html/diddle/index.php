@@ -57,7 +57,6 @@
     </div>
 </div>
 <div id="output-statusbar">
-    <div id="_ui-spinner-updating" class="hidden resize-45 ui-actitivy-spinner"><div class="lds-grid"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></div>
     <a class="logo-gh" href="https://github.com/raffi-ismail/lampodbc" target="_blank"><img class="logo" src="images/logo-gh-cat.png"></a>
     <a class="logo-dh" href="https://hub.docker.com/r/chubbycat/lampodbc" target="_blank"><img class="logo" src="images/logo-dh.png"></a>
 </div>
