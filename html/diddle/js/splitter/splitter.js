@@ -157,8 +157,16 @@ var splitMe = {
 
 };
 
+function detectmob() {
+    if(window.innerWidth <= 800 && window.innerHeight > window.innerWidth) {
+      return true;
+    } else {
+      return false;
+    }
+ }
 
-
-addEvent(window,'load',function () {
-    splitMe.init();
-});
+ if (detectmob() !== true) { 
+     addEvent(window,'load',function () {
+         splitMe.init();
+     });
+ }
