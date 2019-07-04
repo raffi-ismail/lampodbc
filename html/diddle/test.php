@@ -35,31 +35,17 @@
         <input id="param-fiddle-password" type="password">
         <input type="submit" value="OK">
     </div>
-
-    <div class="manual-refresh">
-        <input id="opt-manual-refresh" type="checkbox" />
-        <span class="checkbox-icons" for="opt-manual-refresh">
-            <span class="checkbox-icon unchecked icon-radio-unchecked"></span>
-            <span class="checkbox-icon checked icon-check-alt"></span>
-        </span>
-        <span class="label-manual-refresh">&nbsp;Manually&nbsp;</span><span id="refresh-output" class="button">refresh</span>
-    </div>
 </div>
 <div class="navbar-notices-wrapper">
     <div class="navbar-notices">
         <div id="notice-warning" class="notice-warning"></div>
     </div>
 </div>
-<div class="content-wrapper vertically_divided">
-    <div id="editor"><?php print htmlspecialchars($raw_content); ?></div>
-    <div id="output-wrapper">
-        <iframe id="output" src="v/<?php print DIDDLE_ID; ?>"></iframe>
+<div class="vertically_divided">
+    <div style="background-color:#ff0000;">
     </div>
-</div>
-<div id="output-statusbar">
-    <div id="_ui-spinner-updating" class="hidden resize-45 ui-actitivy-spinner"><div class="lds-grid"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></div>
-    <a class="logo-gh" href="https://github.com/raffi-ismail/lampodbc" target="_blank"><img class="logo" src="images/logo-gh-cat.png"></a>
-    <a class="logo-dh" href="https://hub.docker.com/r/chubbycat/lampodbc" target="_blank"><img class="logo" src="images/logo-dh.png"></a>
+    <div style="background-color:#0000ff;">
+    </div>
 </div>
 <script src="js/ace/src-min-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
 <script src="js/diff_match_patch.js" ></script>
@@ -72,7 +58,7 @@
     var editor = ace.edit("editor");
     editor.setTheme("ace/theme/solarized_dark");
     editor.getSession().setMode("ace/mode/php");
-    editor.getSession().setUseWrapMode(false);
+    editor.getSession().setUseWrapMode(true);
 
     const diddlerObject = new Diddler('update.php');
 

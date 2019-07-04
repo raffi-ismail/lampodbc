@@ -127,9 +127,6 @@ html, body {
         flex-direction: row;
     }
     .content-wrapper > div, .content-wrapper > iframe {
-        display: flex;
-        flex-direction: column;
-        flex: 1;
         min-height: 80vh;
         height: 100%;
     }    
@@ -157,44 +154,41 @@ html, body {
 }
 
 #editor { 
+    display: block;
     padding: 10px 5px !important;
     height: 100%;
 }
 
 
 #output-wrapper {
-    display: flex;
-    flex-direction: column;
-    background-color: #eeeeee;
-    height: 100%;
+    background-color: #eeee;
     padding: 0;
-    margin: 0;
 }
 
 #output {
-    flex: 1;
     width: 100%;
-    padding: 5px;
-    margin: 0;
-    border: 0;
+    height: 100%;
+    bottom: 0!important;
+    background-color: #888888;
     overflow-y: auto;
     overflow-x: hidden;
     word-wrap: break-word;
 }
 
 #output-statusbar {
+    bottom: 0;
     width: 100%;
     text-align: right;
     background-color:#ffffff;
-    color: #000000;
+    color: #ffffff;
     font-size:10pt;
     padding: 5px;
 }
 
-#output-statusbar > span.manual-refresh {
-    margin-top: 3px;
-    margin-left: 38%;
-    float: left;
+#output-navbar > .manual-refresh {
+    padding-top: 0.26em;
+    padding-right: 150px;
+    text-align: right;
 }
 
 #output-statusbar > span.manual-refresh > input {
@@ -287,7 +281,7 @@ html, body {
 	color:#ffffff;
 	font-family:Arial;
 	font-size:10pt;
-	padding:5px 10px;
+	padding:1px 10px;
 	text-decoration:none;
 	text-shadow:0px 1px 0px #283966;
 }
@@ -308,10 +302,10 @@ html, body {
 
 .checkbox-icon {
     position: relative;
-    top: 0.2em;
-    font-size: 1.6em;
+    top: 0.15em;
+    font-size: 1.2em;
     cursor: pointer;
-    color: #1d00a9;
+    color: #fff;
 }
 
 input[type="checkbox"] {

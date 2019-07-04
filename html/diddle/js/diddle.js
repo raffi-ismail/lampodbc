@@ -114,7 +114,7 @@ Diddler.prototype.attempt_refresh_output = function () {
 
 Diddler.prototype.refresh_output = function (manually_triggered) {
     manually_triggered = manually_triggered === true || false;
-    document.getElementById("ui-spinner-updating").classList.remove("hidden");
+    //document.getElementById("ui-spinner-updating").classList.remove("hidden");
     document.getElementById("diddle-refresh").classList.add("animate-refresh");
     
     var content = editor.getSession().getDocument().getValue();
