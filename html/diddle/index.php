@@ -61,18 +61,26 @@
     <a class="logo-dh" href="https://hub.docker.com/r/chubbycat/lampodbc" target="_blank"><img class="logo" src="images/logo-dh.png"></a>
 </div>
 <script src="js/ace/src-min-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
-<script src="js/diff_match_patch.js" ></script>
+<script type="text/javascript" src="js/ace/src-min-noconflict/mode-php.js"></script>
 <script src="js/diddle.js"></script>
 <script src="js/fancy.js"></script>
 <script type="text/javascript" src="js/splitter/splitter.js"></script>
+<script type="text/javascript" src="js/ace/src-min-noconflict/mode-php.js"></script>
+<script type="text/javascript" src="js/ace/src-min-noconflict/ext-language_tools.js"></script>
 <script>
     //var raw_string = `<?php //echo $raw_content; ?>`;
     var diddle_id = '<?php echo DIDDLE_ID; ?>';
     var editor = ace.edit("editor");
+    //editor.setTheme("ace/theme/theme-pastel_on_dark");
     editor.setTheme("ace/theme/solarized_dark");
+    editor.getSession().setUseWorker(true);
     editor.getSession().setMode("ace/mode/php");
     editor.getSession().setUseWrapMode(false);
-
+    editor.setOptions({
+        enableBasicAutocompletion: true,
+        enableSnippets: false,
+        enableLiveAutocompletion: true
+    });
     const diddlerObject = new Diddler('update.php');
 
 <?php if (!get_current_sandbox()->did_diddler_diddle()) { ?>

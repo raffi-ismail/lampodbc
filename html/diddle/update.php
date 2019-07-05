@@ -32,7 +32,7 @@ if (!$sandbox->did_diddler_diddle() && !DEBUG_MODE) {
 $textFile = new TextFile($sandbox->file);
 if (isset($json['deltas'])) {
     $deltas = $json['deltas'];
-    if ($deltas.length) {
+    if (!empty($deltas)) {
         foreach($deltas as $delta) {
             list($start_row, $start_col) = $delta['<'];
             list($end_row, $end_col) = $delta['>'];
@@ -45,7 +45,6 @@ if (isset($json['deltas'])) {
     }
     $a = $textFile->getAllText();
     $s = $textFile->saveFile();
-    $textFile->close();
     $return = [
         'id' => $sandbox->id,
         'deltas' => $deltas,

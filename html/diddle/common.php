@@ -260,7 +260,6 @@ class TextFile {
         fclose ($this->fsFile);
         fclose ($this->fsFileBuffer);
         fclose ($this->fsOutBuffer);
-
     }
 
     function insertText ($startLine, $startColumn, $endLine, $endColumn, $textLines) {
@@ -306,9 +305,10 @@ class TextFile {
                 $text = fgets($this->fsFileBuffer);
                 fputs($this->fsOutBuffer, $text);
             } elseif ($nLine == $startLine) {
-                $text = fread($this->fsFileBuffer, $startColumn);
-                $size += strlen($text);
-                fputs($this->fsOutBuffer, $text);
+                if ($startColumn > 0) {
+                    $text = fread($this->fsFileBuffer, $startColumn);
+                    fputs($this->fsOutBuffer, $text);
+                }
                 if ($nLine == $endLine) {
                     fseek($this->fsFileBuffer, 0 - $startColumn + $endColumn, SEEK_CUR);
                     $text = fgets($this->fsFileBuffer);

@@ -106,10 +106,10 @@ Diddler.prototype.attempt_refresh_output = function () {
         clearTimeout(this.refresh_keypress_timeout);
     }
     this.refresh_keypress_timeout = setTimeout(function() {
-        var a = _this.get_editor_syntax_errors();
-        if (a.length) return;
+        // var a = _this.get_editor_syntax_errors();
+        // if (a.length) return;
         _this.refresh_output();
-    }, 1000); // pause 1second without any further changes before refresh
+    }, 250); // pause without any further changes before refresh
 }
 
 Diddler.prototype.refresh_output = function (manually_triggered) {
