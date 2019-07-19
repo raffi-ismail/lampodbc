@@ -40,5 +40,5 @@ namespace SandboxedNamespace {
     ini_set('open_basedir', __DIDDLE_DIR__);
     
     header('content-type: text/plain');
-    include_once (__DIDDLE_FILE__);
+    print file_get_contents (__DIDDLE_FILE__);
 }

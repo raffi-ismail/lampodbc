@@ -268,7 +268,7 @@ class TextFile {
         
         $size = 0;
         $nLine = 0;
-        while(!feof($this->fsFileBuffer) && $nLine < $startLine) {
+        while (!feof($this->fsFileBuffer) && $nLine < $startLine) {
             $text = fgets($this->fsFileBuffer);
             fputs($this->fsOutBuffer, $text);
             $nLine++;
@@ -300,28 +300,25 @@ class TextFile {
         rewind($this->fsOutBuffer);
 
         $nLine = 0;
+        while (!feof($this->fsFileBuffer) && $nLine < $startLine) {
+            $text = fgets($this->fsFileBuffer);
+            fputs($this->fsOutBuffer, $text);
+            $nLine ++;
+        }   
+        if ($startColumn > 0) {
+            $text = fread($this->fsFileBuffer, $startColumn);
+            fputs($this->fsOutBuffer, $text);
+        }
+        while (!feof($this->fsFileBuffer) && $nLine < $endLine) {
+            fgets($this->fsFileBuffer);
+            $nLine ++;
+        }   
+        if ($endColumn > 0) {
+            fread($this->fsFileBuffer, $endColumn);
+        }
         while (!feof($this->fsFileBuffer)) {
-            if ($nLine < $startLine || $nLine > $endLine) {
-                $text = fgets($this->fsFileBuffer);
-                fputs($this->fsOutBuffer, $text);
-            } elseif ($nLine == $startLine) {
-                if ($startColumn > 0) {
-                    $text = fread($this->fsFileBuffer, $startColumn);
-                    fputs($this->fsOutBuffer, $text);
-                }
-                if ($nLine == $endLine) {
-                    fseek($this->fsFileBuffer, 0 - $startColumn + $endColumn, SEEK_CUR);
-                    $text = fgets($this->fsFileBuffer);
-                    fputs($this->fsOutBuffer, $text);
-                }
-            } elseif ($endColumn > 0) {
-                fseek($this->fsFileBuffer, $endColumn, SEEK_CUR);
-                $text = fgets($this->fsFileBuffer);
-                fputs($this->fsOutBuffer, $text);
-            } else {
-                $text = fgets($this->fsFileBuffer);
-            }
-            $nLine++;
+            $text = fgets($this->fsFileBuffer);
+            fputs($this->fsOutBuffer, $text);
         }
         
         $size = ftell($this->fsOutBuffer);

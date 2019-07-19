@@ -58,7 +58,6 @@ Diddler.prototype.parse_editor_deltas = function (delta) {
         delta.action == 'insert' && last_delta['@'] == '+' && 
         last_delta['>'][0] == start_row && last_delta['>'][1] == delta.start.column
     ) {
-        console.log('---test');
         this.deltas.pop();
         last_delta['>'][0] = delta.end.row;
         last_delta['>'][1] = delta.end.column;
@@ -86,7 +85,10 @@ Diddler.prototype.parse_editor_deltas = function (delta) {
     } else {
         this.deltas.push ( d );
     }
-    console.log('Deltas now:', this.deltas)
+    var newp = document.createElement('p');
+    newp.innerHTML = JSON.stringify(this.deltas);
+    document.getElementById('output-debug') .append(newp);
+
 }
 
 Diddler.prototype.set_navbar_warning_notice = function (message) {

@@ -1,0 +1,3 @@
+[submodule "html/codiad"]
+	path = html/codiad
+	url = https://github.com/Codiad/Codiad.git

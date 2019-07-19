@@ -54,6 +54,8 @@
     <div id="editor"><?php print htmlspecialchars($raw_content); ?></div>
     <div id="output-wrapper">
         <iframe id="output" src="v/<?php print DIDDLE_ID; ?>"></iframe>
+        <div id="output-debug">
+        </div>
     </div>
 </div>
 <div id="output-statusbar">

@@ -1,3 +1,11 @@
+var frame = document.getElementById('output');
+    frame.onload = function () {
+        var body = frame.contentWindow.document.querySelector('body');
+        body.style.color = '#000000';
+        body.style.fontSize = '1em';
+        body.style.lineHeight = '1.1em';
+    };
+
 document.getElementById('link-url-copy').addEventListener('click', function(e) {
     var texturl = document.getElementById('text-url-copy');
     texturl.select();
