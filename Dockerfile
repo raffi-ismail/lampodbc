@@ -57,13 +57,13 @@ COPY etc/php.ini /etc/php/7.2/apache2/
 RUN a2enmod rewrite
 
 WORKDIR /var/www
-RUN mkdir -p sandbox && chown -R root:root sandbox && chmod 777 sandbox
+# RUN mkdir -p sandbox && chown -R root:root sandbox && chmod 777 sandbox
 COPY etc/composer.json ./
 COPY sh/setup-composer.sh /tmp/
 RUN chmod +x /tmp/setup-composer.sh && /tmp/setup-composer.sh && ./composer.phar install
 
-RUN mv html/index.html html/index.old.html
-ADD html html/
+# RUN mv html/index.html html/index.old.html
+# ADD html html/
 
 COPY startup.sh /var/
 RUN chmod +x /var/startup.sh
@@ -74,7 +74,11 @@ ENV DEFAULT_LISTEN_PORT_HTTP 80
 #-- Not used at the moment ---
 #ENV DEFAULT_WEB_LISTEN_PORT_HTTPS
 
-EXPOSE 2222 443 $PORT
+# EXPOSE 2222 443 $PORT
+# 2222 for SSH $PORT for $ENV variable if passed from Azure Web Apps (when VNet integration is configured)
+# Otherwise $POST defaults to 80.
+# SSH not available with Vnet integration 
+EXPOSE 2222 $PORT
 
 
 ENTRYPOINT ["/var/startup.sh"] 
