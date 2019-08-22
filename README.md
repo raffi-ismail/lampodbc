@@ -13,11 +13,6 @@ Supports (on Azure via custom container on Web Apps):
 Most configs (PHP, Apache etc) are mostly still defaults. 
 DocumentRoot is still at /var/www/html
 
-The additional Code-Server binary is included if you want to run the Node-JS version of Visual Code in a browser. But since Azure App Services does not support ports other than HTTP 80 and HTTP 443, this could work if you ran Code-Server on one port, and Apache on the other.
-
-Added Codiad web based editor
-
-Alternatively you could deploy two containers. One running Code-Server, and this one. On Azure, you would deploy these as two staging slots or two App Services.
 
 
 // Released as copyleft, GPLv3
